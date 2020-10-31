@@ -1,6 +1,7 @@
 package ch.egli.commerce.persistence;
 
 import ch.egli.commerce.enumeration.ProductCategory;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,19 +19,22 @@ import lombok.Setter;
 public class Product extends Persistence {
 
   @NotNull
+  @Column (nullable = false)
   private String name;
 
   @NotNull
+  @Column (nullable = false)
   private String description;
 
   @NotNull
+  @Column (nullable = false)
   private Long price;
 
   @NotNull
+  @Column (nullable = false)
   private Integer stock;
 
   @NotNull
   @Enumerated(EnumType.ORDINAL)
   private ProductCategory category;
-
 }

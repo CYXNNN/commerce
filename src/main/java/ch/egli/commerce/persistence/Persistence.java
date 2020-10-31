@@ -1,5 +1,6 @@
 package ch.egli.commerce.persistence;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
