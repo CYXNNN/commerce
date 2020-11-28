@@ -4,14 +4,18 @@ import ch.egli.commerce.persistence.Persistence;
 import com.querydsl.jpa.impl.JPAQuery;
 import java.util.Optional;
 import java.util.UUID;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+@Stateless
 public class Database {
 
-  private final EntityManager entityManager;
+  @Inject
+  private EntityManager entityManager;
 
-  public Database(EntityManager entityManager) {
-    this.entityManager = entityManager;
+  public Database() {
+    // nope
   }
 
   public JPAQuery query() {

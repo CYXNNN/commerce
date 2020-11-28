@@ -15,26 +15,27 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name = "product")
 public class Product extends Persistence {
 
   @NotNull
-  @Column (nullable = false)
+  @Column(nullable = false, name = "name")
   private String name;
 
   @NotNull
-  @Column (nullable = false)
+  @Column(nullable = false, name = "description")
   private String description;
 
   @NotNull
-  @Column (nullable = false)
+  @Column(nullable = false, name = "price")
   private Long price;
 
   @NotNull
-  @Column (nullable = false)
+  @Column(nullable = false, name = "stock")
   private Integer stock;
 
   @NotNull
   @Enumerated(EnumType.ORDINAL)
+  @Column(nullable = false, name = "category")
   private ProductCategory category;
 }

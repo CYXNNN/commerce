@@ -1,6 +1,5 @@
 package ch.egli.commerce.persistence;
 
-import java.security.Principal;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -20,10 +19,11 @@ public abstract class Persistence {
   @Id
   @NotNull
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id")
   private UUID id;
 
-  @Column
   @NotNull
+  @Column(name = "creation_date")
   private Date creationDate;
 
 }

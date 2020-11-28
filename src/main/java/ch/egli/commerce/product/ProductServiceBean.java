@@ -15,6 +15,10 @@ public class ProductServiceBean implements ProductService {
 
   private ProductRepo productRepo;
 
+  public ProductServiceBean() {
+    // nope
+  }
+
   @Inject
   ProductServiceBean(ProductRepo productRepo) {
     this.productRepo = productRepo;

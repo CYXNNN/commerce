@@ -1,6 +1,5 @@
 package ch.egli.commerce.product;
 
-
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.WILDCARD;
 
@@ -10,8 +9,7 @@ import ch.egli.commerce.product.dto.ProductDTO;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import javax.annotation.Resource;
-import javax.ejb.SessionContext;
+import javax.annotation.security.PermitAll;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -34,6 +32,10 @@ public class ProductResource {
 
   private ProductService productService;
 
+  public ProductResource() {
+    // nope
+  }
+
   @Inject
   ProductResource(ProductService productService) {
     this.productService = productService;
@@ -42,8 +44,10 @@ public class ProductResource {
   @GET
   @Path("")
   @Produces(APPLICATION_JSON)
+  @PermitAll
   public List<ProductDTO> getProducts() {
-    // TODO performance -> pagination
+    // TODO in any later version: performance -> pagination
+    //  we should never select *, rather pass limits from client
     return productService.getAll()
       .stream()
       .map(p -> new ProductDTO().fromEntity(p))
@@ -65,7 +69,6 @@ public class ProductResource {
   @Produces(APPLICATION_JSON)
   public Response post(
     @NotNull @Valid ProductCreationDTO productCreationDTO
-
   ) {
     productService.post(productCreationDTO);
     return Response.ok().build();

@@ -15,6 +15,10 @@ public class ProductRepo {
 
   private Database database;
 
+  public ProductRepo() {
+    // nope
+  }
+
   @Inject
   public ProductRepo(Database database) {
     this.database = database;

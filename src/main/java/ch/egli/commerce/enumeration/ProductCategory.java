@@ -1,6 +1,6 @@
 package ch.egli.commerce.enumeration;
 
-// TODO for future releases categories should be configurable
+// TODO for future releases categories should be configurable and available in i18n
 //  too much work for now tho
 public enum ProductCategory {
   FOOD("Food"),
@@ -10,6 +10,7 @@ public enum ProductCategory {
   private String displayName;
 
   ProductCategory(String displayName) {
-    this.displayName = displayName;
+    this.displayName = displayName
+    ;
   }
 }

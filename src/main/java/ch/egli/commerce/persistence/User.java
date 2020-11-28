@@ -1,34 +1,49 @@
 package ch.egli.commerce.persistence;
 
-import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.security.auth.Subject;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
 
+import java.security.Principal;
+import javax.annotation.Nullable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.security.auth.Subject;
+import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table(name = "user")
 public class User extends Persistence implements Principal {
 
-  public void getCustomerData() {
-    getZeitfensters().stream().map(SLAZeitfenster::merge).collect(Collectors.toList());
-  }
+  @NotNull
+  @Column(name = "username")
+  private String username;
 
-  public List<User> users;
+  @NotNull
+  @Column(name = "password_hash")
+  private String password_hash;
+
+  @Nullable
+  @OneToOne(orphanRemoval = true, fetch = LAZY, cascade = ALL)
+  @JoinColumn(name = "user_address")
+  private Address address;
 
   @Override
   public String getName() {
-    return null;
+    return username;
   }
 
   @Override
   public boolean implies(Subject subject) {
     return false;
-  }
-
-  public static SLAZeitfenster merge(SLAZeitfensterDTO  zfdto) {
-    var zf = new SLAZeitfenster();
-    zf.setAusfuehrungsBedingung(ab);
-    zfdto.apply(zf);
-
-    return zf;
   }
 
 }
