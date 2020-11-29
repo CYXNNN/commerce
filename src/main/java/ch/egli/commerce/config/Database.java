@@ -3,15 +3,18 @@ package ch.egli.commerce.config;
 import ch.egli.commerce.persistence.Persistence;
 import com.querydsl.jpa.impl.JPAQuery;
 import java.util.Optional;
-import java.util.UUID;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+/**
+ * @author Christian Egli
+ * <br>Helper class with generics for basic CRUD operations
+ */
 @Stateless
 public class Database {
 
-  @Inject
+  @PersistenceContext(unitName = "commerce_unit")
   private EntityManager entityManager;
 
   public Database() {
@@ -19,7 +22,7 @@ public class Database {
   }
 
   public JPAQuery query() {
-    return new JPAQuery();
+    return new JPAQuery(entityManager);
   }
 
   public void flush() {
@@ -38,7 +41,13 @@ public class Database {
     entityManager.remove(entity);
   }
 
-  public <Entity extends Persistence> Optional<Entity> find(Class<Entity> clazz, UUID id) {
-    return Optional.of(entityManager.find(clazz, id));
+  public <Entity> Optional<Entity> find(Class<Entity> clazz, String id) {
+    Entity res = entityManager.find(clazz, id);
+
+    if (res != null) {
+      return Optional.ofNullable(res);
+    }
+
+    return Optional.ofNullable(null);
   }
 }
