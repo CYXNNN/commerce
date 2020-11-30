@@ -2,7 +2,6 @@ package ch.egli.commerce.dto;
 
 import ch.egli.commerce.persistence.Persistence;
 import java.util.Date;
-import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +11,12 @@ import lombok.Setter;
 public class AbstractDTO {
 
   @NotNull
-  private UUID id;
+  private String id;
 
   @NotNull
   private Date creationDate;
 
-  public void fromEntity (AbstractDTO target, Persistence entity) {
+  public void fromEntity(AbstractDTO target, Persistence entity) {
     target.id = entity.getId();
     target.creationDate = entity.getCreationDate();
   }

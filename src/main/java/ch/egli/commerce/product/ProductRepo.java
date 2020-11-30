@@ -39,8 +39,8 @@ public class ProductRepo {
     database.remove(product);
   }
 
-  public Product find(UUID id) {
+  public Product find(String id) {
     //FIXME error handling
-    return database.find(Product.class, id).orElseThrow(NullPointerException::new);
+    return database.find(Product.class, id).orElse(null);
   }
 }

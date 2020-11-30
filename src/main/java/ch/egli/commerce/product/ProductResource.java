@@ -3,11 +3,11 @@ package ch.egli.commerce.product;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.WILDCARD;
 
+import ch.egli.commerce.enumeration.ProductCategory;
 import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.product.dto.ProductCreationDTO;
 import ch.egli.commerce.product.dto.ProductDTO;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.annotation.security.PermitAll;
 import javax.enterprise.context.RequestScoped;
@@ -58,9 +58,27 @@ public class ProductResource {
   @Path("/{id}")
   @Produces(APPLICATION_JSON)
   public ProductDTO get(
-    @PathParam("id") @NotNull @Valid UUID id
+    @PathParam("id") @NotNull @Valid String id
   ) {
     return new ProductDTO().fromEntity(productService.find(id));
+  }
+
+  @GET
+  @Path("/sample-data")
+  @Produces(APPLICATION_JSON)
+  public Response sampleData(
+  ) {
+
+    ProductCreationDTO p = new ProductCreationDTO();
+    p.setDescription("test");
+    p.setStock(23);
+    p.setCategory(ProductCategory.DRINK);
+    p.setPrice(23l);
+    p.setName("arschloch");
+
+    productService.post(p);
+
+    return Response.ok().build();
   }
 
   @POST
@@ -90,7 +108,7 @@ public class ProductResource {
   @Consumes(APPLICATION_JSON)
   @Produces(WILDCARD)
   public Response delete(
-    @PathParam("id") @NotNull @Valid UUID id
+    @PathParam("id") @NotNull @Valid String id
   ) {
     productService.delete(id);
     return Response.ok().build();

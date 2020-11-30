@@ -1,7 +1,6 @@
 package ch.egli.commerce.persistence;
 
 import java.util.Date;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,9 +16,11 @@ import org.hibernate.annotations.GenericGenerator;
 public abstract class Persistence {
 
   @NotNull
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id")
-  private UUID id;
+  @Column(name = "id", length = 64)
+  @Id
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
+  private String id;
 
   @NotNull
   @Column(name = "creation_date")

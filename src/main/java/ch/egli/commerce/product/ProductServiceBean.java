@@ -4,7 +4,6 @@ import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.product.dto.ProductCreationDTO;
 import ch.egli.commerce.product.dto.ProductDTO;
 import java.util.Collection;
-import java.util.UUID;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -25,7 +24,7 @@ public class ProductServiceBean implements ProductService {
   }
 
   @Override
-  public Product find(UUID id) {
+  public Product find(String id) {
     return productRepo.find(id);
   }
 
@@ -42,11 +41,16 @@ public class ProductServiceBean implements ProductService {
 
   @Override
   public void post(ProductCreationDTO creationDTO) {
-    productRepo.post(creationDTO.toEntity(new Product()));
+
+    Product p = creationDTO.toEntity(new Product());
+
+    System.out.println(p.getId());
+
+    productRepo.post(p);
   }
 
   @Override
-  public void delete(UUID id) {
+  public void delete(String id) {
     Product toDelete = productRepo.find(id);
     productRepo.delete(toDelete);
   }
