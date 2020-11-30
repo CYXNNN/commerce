@@ -1,0 +1,3 @@
+<div *ngFor="let product of products$ | async">
+  <a [routerLink]="['/products', product.id]">{{product.name}}</a> - {{product.price}}
+</div>
