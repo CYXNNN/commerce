@@ -76,58 +76,62 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <source>8</source>
-          <target>8</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.wildfly.plugins</groupId>
-        <artifactId>wildfly-maven-plugin</artifactId>
-        <version>2.1.0.Beta1</version>
-        <configuration>
-          <java-opts>
-            <javaOpt>-agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=y</javaOpt>
-          </java-opts>
-          <add-user>
-            <users>
-              <user>
-                <username>admin</username>
-                <password>admin</password>
-                <groups>
-                  <group>admin</group>
-                </groups>
-                <application-user>false</application-user>
-              </user>
-            </users>
-          </add-user>
-        </configuration>
-        <executions>
-          <execution>
-            <id>add-datasource</id>
-            <phase>package</phase>
-            <goals>
-              <goal>add-resource</goal>
-            </goals>
-            <configuration>
-              <address>subsystem=datasources,data-source=java:jdbc/commerce</address>
-              <resources>
-                <resource>
-                  <properties>
-                    <jndi-name>java:/jdbc/commerce</jndi-name>
-                    <enabled>true</enabled>
-                    <connection-url>jdbc:mysql://localhost:3306/commerce</connection-url>
-                    <driver-class>com.mysql.cj.jdbc.Driver</driver-class>
-                    <driver-name>commerce.war_com.mysql.cj.jdbc.Driver_8_0</driver-name>
-                    <user-name>root</user-name>
-                  </properties>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
+      <!--
+            <plugin>
+              <groupId>org.wildfly.plugins</groupId>
+              <artifactId>wildfly-maven-plugin</artifactId>
+              <version>2.0.2.Final</version>
+              <configuration>
+                <java-opts>
+                  <javaOpt>-agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=y</javaOpt>
+                </java-opts>
+                <add-user>
+                  <users>
+                    <user>
+                      <username>admin</username>
+                      <password>admin</password>
+                      <groups>
+                        <group>admin</group>
+                      </groups>
+                      <application-user>false</application-user>
+                    </user>
+                  </users>
+                </add-user>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>add-datasource</id>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>add-resource</goal>
+                  </goals>
+                  <configuration>
+                    <address>subsystem=datasources,data-source=java:jdbc/commerce</address>
+                    <resources>
+                      <resource>
+                        <properties>
+                          <jndi-name>java:/jdbc/commerce</jndi-name>
+                          <enabled>true</enabled>
+                          <connection-url>jdbc:mysql://localhost:3306/commerce</connection-url>
+                          <driver-class>com.mysql.cj.jdbc.Driver</driver-class>
+                          <driver-name>commerce.war_com.mysql.cj.jdbc.Driver_8_0</driver-name>
+                          <user-name>root</user-name>
+                        </properties>
+                      </resource>
+                    </resources>
+                  </configuration>
+                </execution>
 
-        </executions>
-      </plugin>
+              </executions>
+
+    </plugin>
+              -->
     </plugins>
     <finalName>commerce</finalName>
   </build>
+
 </project>

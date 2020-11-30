@@ -4,7 +4,6 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
 import java.security.Principal;
-import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -31,7 +30,6 @@ public class User extends Persistence implements Principal {
   @Column(name = "password_hash")
   private String password_hash;
 
-  @Nullable
   @OneToOne(orphanRemoval = true, fetch = LAZY, cascade = ALL)
   @JoinColumn(name = "user_address")
   private Address address;

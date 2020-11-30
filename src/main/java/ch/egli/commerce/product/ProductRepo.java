@@ -4,7 +4,6 @@ import ch.egli.commerce.config.Database;
 import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.persistence.QProduct;
 import java.util.List;
-import java.util.UUID;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
