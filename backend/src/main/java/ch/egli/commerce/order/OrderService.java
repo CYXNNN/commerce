@@ -1,15 +1,15 @@
 package ch.egli.commerce.order;
 
-import ch.egli.commerce.order.dto.OrderProductCreationDTO;
-import ch.egli.commerce.persistence.PlacedOrder;
+import ch.egli.commerce.order.dto.OrderCreationDTO;
+import ch.egli.commerce.persistence.Order;
 import java.util.List;
 
 public interface OrderService {
 
-  void post(OrderProductCreationDTO dto);
+  void post(OrderCreationDTO dto);
 
-  List<PlacedOrder> get(String id);
+  List<Order> getByUser(String userId);
 
-  List<PlacedOrder> get();
+  List<Order> getByUser();
 
 }

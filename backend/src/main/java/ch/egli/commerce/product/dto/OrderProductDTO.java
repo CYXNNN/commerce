@@ -15,9 +15,9 @@ public class OrderProductDTO {
   @NotNull
   private String id;
 
-  private String name;
-
   @NotNull
   private Integer quantity;
+
+  private String name;
 
 }

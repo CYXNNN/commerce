@@ -1,9 +1,11 @@
 package ch.egli.commerce.order;
 
 import ch.egli.commerce.config.Database;
-import ch.egli.commerce.persistence.OrderProduct;
-import ch.egli.commerce.persistence.PlacedOrder;
-import ch.egli.commerce.persistence.QOrderProduct;
+import ch.egli.commerce.persistence.Order;
+import ch.egli.commerce.persistence.OrderItem;
+import ch.egli.commerce.persistence.QOrder;
+import ch.egli.commerce.persistence.QOrderItem;
+import ch.egli.commerce.persistence.User;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -25,24 +27,33 @@ public class OrderRepo {
     this.database = database;
   }
 
-  public List<OrderProduct> getAll() {
-    return database.query().from(QOrderProduct.orderProduct).fetch();
+  public List<OrderItem> getAll() {
+    return database.query().from(QOrderItem.orderItem).fetch();
   }
 
-  public void post(PlacedOrder order) {
+  public void post(Order order) {
     database.persist(order);
   }
 
-  public OrderProduct put(OrderProduct order) {
+  public OrderItem put(OrderItem order) {
     return database.merge(order);
   }
 
-  public void delete(OrderProduct order) {
+  public void delete(OrderItem order) {
     database.remove(order);
   }
 
-  public OrderProduct find(String id) {
+  public OrderItem find(String id) {
     //FIXME error handling
-    return database.find(OrderProduct.class, id).orElse(null);
+    return database.find(OrderItem.class, id).orElse(null);
+  }
+
+  public List<Order> findByUser(User user) {
+    return (List<Order>) database.queryFactory().from(QOrder.order)
+      .where(QOrder.order.user.eq(user))
+      .innerJoin(QOrder.order.items).fetchJoin()
+      .innerJoin(QOrder.order.billingAddress).fetchJoin()
+      .innerJoin(QOrder.order.senderAddress).fetchJoin()
+      .fetch();
   }
 }

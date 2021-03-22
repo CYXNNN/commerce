@@ -12,16 +12,16 @@ import lombok.Setter;
 public class ProductCreationDTO {
 
   @NotNull
-  private String name = "";
+  private String name;
 
   @NotNull
-  private String description = "";
+  private String description;
 
   @NotNull
-  private Long price = 0l;
+  private Double price;
 
   @NotNull
-  private Integer stock = 0;
+  private Integer stock;
 
   @NotNull
   private ProductCategory category;

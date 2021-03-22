@@ -26,25 +26,25 @@ export class OrderComponent implements OnInit {
 
     this.products = this.cartService.get();
 
+    //FIXME remove test values
     this.form = this.fb.group({
       products: this.fb.array([], Validators.required),
       senderAddress: this.fb.group({
-        name: ['', Validators.required],
-        prename: ['', Validators.required],
-        street: ['', Validators.required],
-        number: ['', Validators.required],
-        zip: ['', Validators.required],
-        city: ['', Validators.required],
+        name: ['test1', Validators.required],
+        prename: ['test1', Validators.required],
+        street: ['test1', Validators.required],
+        number: ['test1', Validators.required],
+        zip: ['test1', Validators.required],
+        city: ['test1', Validators.required],
       }),
-      receiverAddress: this.fb.group({
-        name: ['', Validators.required],
-        prename: ['', Validators.required],
-        street: ['', Validators.required],
-        number: ['', Validators.required],
-        zip: ['', Validators.required],
-        city: ['', Validators.required],
+      billingAddress: this.fb.group({
+        name: ['test2', Validators.required],
+        prename: ['test2', Validators.required],
+        street: ['test2', Validators.required],
+        number: ['test2', Validators.required],
+        zip: ['test2', Validators.required],
+        city: ['test2', Validators.required],
       }),
-      orderTotal: undefined,
       // TODO implement payment methods
       payment: 'BILL', // nothing else implemented yet
     })

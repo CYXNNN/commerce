@@ -1,5 +1,6 @@
 package ch.egli.commerce.address.dto;
 
+import ch.egli.commerce.dto.AbstractDTO;
 import ch.egli.commerce.persistence.Address;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressCreationDTO {
+public class AddressDTO extends AbstractDTO {
 
   @NotNull
   private String name = "";

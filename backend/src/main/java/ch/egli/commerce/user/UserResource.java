@@ -16,10 +16,11 @@ import javax.ws.rs.core.Response;
 @RequestScoped
 @Transactional
 @Path("/user/v1")
+// FIXME this is bullshit
 public class UserResource {
 
   @POST
-  @Path("/signin")
+  @Path("/signout")
   @Consumes(APPLICATION_JSON)
   @Produces(APPLICATION_JSON)
   public Response signout(

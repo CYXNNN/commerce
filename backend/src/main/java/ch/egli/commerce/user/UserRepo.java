@@ -28,6 +28,12 @@ public class UserRepo {
       .fetchFirst();
   }
 
+  public User findById(String id) {
+    return database.queryFactory().selectFrom(QUser.user)
+      .where(QUser.user.id.eq(id))
+      .fetchFirst();
+  }
+
   public Boolean existsByUsername(String username) {
     return database.queryFactory().selectFrom(QUser.user)
       .where(QUser.user.username.eq(username))
@@ -38,6 +44,10 @@ public class UserRepo {
     return database.queryFactory().selectFrom(QUser.user)
       .where(QUser.user.email.eq(email))
       .fetchFirst() != null;
+  }
+
+  public void post(User user) {
+    database.persist(user);
   }
 
 }

@@ -24,6 +24,10 @@ public abstract class Persistence {
 
   @NotNull
   @Column(name = "creation_date")
-  private Date creationDate;
+  private Date creationDate = new Date();
+
+  @NotNull
+  @Column(name = "modification_date")
+  private Date modificationDate = new Date();
 
 }

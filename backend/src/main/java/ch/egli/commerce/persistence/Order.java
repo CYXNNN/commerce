@@ -4,9 +4,12 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
 import ch.egli.commerce.enumeration.PaymentOption;
+import ch.egli.commerce.enumeration.Shipment;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,18 +24,18 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "placed_order")
-public class PlacedOrder extends Persistence {
+@Table(name = "`order`")
+public class Order extends Persistence {
 
   @NotNull
   @Size(min = 1)
-  @OneToMany(mappedBy = "product", orphanRemoval = true, fetch = LAZY, cascade = ALL)
-  private List<OrderProduct> products;
+  @OneToMany(mappedBy = "order", orphanRemoval = true, fetch = LAZY, cascade = ALL)
+  private List<OrderItem> items;
 
   @NotNull
   @OneToOne(orphanRemoval = true, fetch = LAZY, cascade = ALL)
-  @JoinColumn(name = "receiver_address_id", nullable = false)
-  private Address receiverAddress;
+  @JoinColumn(name = "billing_address_id", nullable = false)
+  private Address billingAddress;
 
   @NotNull
   @OneToOne(orphanRemoval = true, fetch = LAZY, cascade = ALL)
@@ -41,9 +44,19 @@ public class PlacedOrder extends Persistence {
 
   @NotNull
   @Column(name = "order_total", nullable = false)
-  private Long orderTotal;
+  private Double orderTotal;
+
+  @NotNull
+  @OneToOne(orphanRemoval = true, fetch = LAZY, cascade = ALL)
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
   @NotNull
   @Column(nullable = false, name = "payment_option")
   private PaymentOption paymentOption = PaymentOption.BILL;
+
+  @NotNull
+  @Column(nullable = false, name = "shipment")
+  @Enumerated(EnumType.STRING)
+  private Shipment shipment = Shipment.WAITING;
 }

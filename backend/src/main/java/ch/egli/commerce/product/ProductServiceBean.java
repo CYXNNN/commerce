@@ -43,9 +43,6 @@ public class ProductServiceBean implements ProductService {
   public void post(ProductCreationDTO creationDTO) {
 
     Product p = creationDTO.toEntity(new Product());
-
-    System.out.println(p.getId());
-
     productRepo.post(p);
   }
 

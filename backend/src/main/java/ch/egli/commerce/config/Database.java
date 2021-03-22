@@ -3,6 +3,7 @@ package ch.egli.commerce.config;
 import ch.egli.commerce.persistence.Persistence;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.Date;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,6 +36,8 @@ public class Database {
   }
 
   public <Entity extends Persistence> Entity merge(Entity entity) {
+    // update modification date when an entity gets merged
+    entity.setModificationDate(new Date());
     return entityManager.merge(entity);
   }
 

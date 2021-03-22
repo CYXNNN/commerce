@@ -24,9 +24,8 @@ export interface PlacedOrder {
   id: string,
   creationDate: Date,
   products: OrderProduct[],
-  receiverAddress: Address,
+  billingAddress: Address,
   senderAddress: Address,
-  orderTotal: number,
 }
 
 @Injectable({

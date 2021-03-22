@@ -13,7 +13,7 @@ public class ProductTest {
   public void should_insert_product_into_database() {
     Product p = new Product();
     p.setName("test");
-    p.setPrice(4l);
+    p.setPrice(new Double(4.25));
     p.setCategory(ProductCategory.DRINK);
     p.setStock(200);
     p.setDescription("this is a very good product :)");

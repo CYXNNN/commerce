@@ -5,10 +5,10 @@
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
   version="2.1">
   <entity class="ch.egli.commerce.persistence.Address"/>
-  <entity class="ch.egli.commerce.persistence.OrderProduct"/>
+  <entity class="ch.egli.commerce.persistence.OrderItem"/>
   <entity class="ch.egli.commerce.persistence.Product"/>
   <entity class="ch.egli.commerce.persistence.Payment"/>
-  <entity class="ch.egli.commerce.persistence.PlacedOrder"/>
+  <entity class="ch.egli.commerce.persistence.Order"/>
   <entity class="ch.egli.commerce.persistence.User"/>
 
 </entity-mappings>
