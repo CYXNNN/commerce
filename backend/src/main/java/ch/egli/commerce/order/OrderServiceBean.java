@@ -56,8 +56,8 @@ public class OrderServiceBean implements OrderService {
     order.setOrderTotal(total);
 
     // FIXME Address may be present, dont create new if so
-    order.setBillingAddress(dto.getSenderAddress().toEntity());
-    order.setSenderAddress(dto.getBillingAddress().toEntity());
+    order.setBillingAddress(dto.getBillingAddress().toEntity());
+    order.setSenderAddress(dto.getSenderAddress().toEntity());
 
     // FIXME use principal when login is implemented
     order.setUser(userRepo.findByUsername("admin"));
