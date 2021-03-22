@@ -45,4 +45,19 @@ public class AddressDTO extends AbstractDTO {
     return ad;
   }
 
+  public AddressDTO fromEntity(Address entity) {
+    AddressDTO addressDTO = new AddressDTO();
+
+    super.fromEntity(this, entity);
+
+    addressDTO.setCity(entity.getCity());
+    addressDTO.setName(entity.getName());
+    addressDTO.setNumber(entity.getNumber());
+    addressDTO.setPrename(entity.getPrename());
+    addressDTO.setStreet(entity.getStreet());
+    addressDTO.setZip(entity.getZip());
+
+    return addressDTO;
+  }
+
 }

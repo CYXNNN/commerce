@@ -59,7 +59,7 @@ public class OrderServiceBean implements OrderService {
     order.setBillingAddress(dto.getSenderAddress().toEntity());
     order.setSenderAddress(dto.getBillingAddress().toEntity());
 
-    // FIXME use principal
+    // FIXME use principal when login is implemented
     order.setUser(userRepo.findByUsername("admin"));
 
     orderRepo.post(order);

@@ -4,8 +4,9 @@ package ch.egli.commerce.order;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import ch.egli.commerce.order.dto.OrderCreationDTO;
-import ch.egli.commerce.persistence.Order;
+import ch.egli.commerce.order.dto.OrderDisplayDTO;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.security.PermitAll;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -48,8 +49,11 @@ public class OrderResource {
   @Path("/{userId}")
   @Produces(APPLICATION_JSON)
   @PermitAll
-  public List<Order> getOrdersOfUser(@PathParam("userId") @NotNull @Valid String userId) {
-    return orderService.getByUser(userId);
+  public List<OrderDisplayDTO> getOrdersOfUser(@PathParam("userId") @NotNull @Valid String userId) {
+    return orderService.getByUser(userId)
+      .stream()
+      .map(o -> new OrderDisplayDTO().fromEntity(o))
+      .collect(Collectors.toList());
   }
 
 }
