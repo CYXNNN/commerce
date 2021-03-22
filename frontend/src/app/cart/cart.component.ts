@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {CartService, Orderable} from "../service/cart.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-cart',
@@ -7,24 +9,19 @@ import {Component, OnInit} from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  items: Map<string, number> = new Map<string, number>();
+  items$: Observable<Orderable[]> | undefined;
 
-  constructor() {
+  constructor(private cartService: CartService) {
   }
 
   ngOnInit(): void {
+    // get observable of cart service
+    // so the cart will update itself on action
+    this.items$ = this.cartService.getObservable();
   }
 
-  public put(id: string, amount: number): void {
-    const current = this.items.get(id);
-    if (current) {
-      this.items.set(id, amount + current);
-    }
-    this.items.set(id, amount);
-  }
-
-  public remove(id: string): void {
-    this.items.delete(id);
+  remove(id: string): void {
+    this.items$ = this.cartService.remove(id);
   }
 
 }

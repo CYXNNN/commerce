@@ -1,3 +1,9 @@
 <div *ngIf="product">
-  {{product.name}} - {{product.price}}<br>{{product.description}}
+  {{product.name}} - {{product.price.toLocaleString('de-CH', {style: 'currency', currency: 'CHF'})}}
+  <br>{{product.description}}
+  <br>
+  <button (click)="addToCart()">+</button>
 </div>
+
+
+<app-cart></app-cart>

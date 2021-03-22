@@ -74,7 +74,7 @@ public class ProductResource {
     p.setStock(23);
     p.setCategory(ProductCategory.DRINK);
     p.setPrice(23l);
-    p.setName("arschloch");
+    p.setName("test");
 
     productService.post(p);
 

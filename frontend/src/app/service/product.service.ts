@@ -9,6 +9,15 @@ const options = {
   })
 };
 
+export interface Product {
+  id: string,
+  creationDate: Date,
+  name: string,
+  description: string,
+  price: number,
+  stock: number,
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,14 +25,14 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  getProducts(): Observable<any> {
+  getProducts(): Observable<Product[]> {
     // now returns an Observable of Config
-    return this.http.get<any>(BASE_URL);
+    return this.http.get<Product[]>(BASE_URL);
   }
 
-  get(id: string): Observable<any> {
+  get(id: string): Observable<Product> {
     // now returns an Observable of Config
-    return this.http.get<any>(BASE_URL + '/' + id);
+    return this.http.get<Product>(BASE_URL + '/' + id);
   }
 
   post(product: any): Observable<any> {

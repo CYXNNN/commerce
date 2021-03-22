@@ -3,6 +3,7 @@ package ch.egli.commerce.persistence;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
+import ch.egli.commerce.enumeration.PaymentOption;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,8 +38,12 @@ public class PlacedOrder extends Persistence {
   @OneToOne(orphanRemoval = true, fetch = LAZY, cascade = ALL)
   @JoinColumn(name = "sender_address_id", nullable = false)
   private Address senderAddress;
-  
+
   @NotNull
   @Column(name = "order_total", nullable = false)
   private Long orderTotal;
+
+  @NotNull
+  @Column(nullable = false, name = "payment_option")
+  private PaymentOption paymentOption = PaymentOption.BILL;
 }

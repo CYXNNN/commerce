@@ -2,6 +2,7 @@ package ch.egli.commerce.config;
 
 import ch.egli.commerce.persistence.Persistence;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,6 +26,10 @@ public class Database {
     return new JPAQuery(entityManager);
   }
 
+  public JPAQueryFactory queryFactory() {
+    return new JPAQueryFactory(entityManager);
+  }
+
   public void flush() {
     entityManager.flush();
   }
@@ -41,13 +46,7 @@ public class Database {
     entityManager.remove(entity);
   }
 
-  public <Entity> Optional<Entity> find(Class<Entity> clazz, String id) {
-    Entity res = entityManager.find(clazz, id);
-
-    if (res != null) {
-      return Optional.ofNullable(res);
-    }
-
-    return Optional.ofNullable(null);
+  public <Entity extends Persistence> Optional<Entity> find(Class<Entity> clazz, String id) {
+    return Optional.ofNullable(entityManager.find(clazz, id));
   }
 }
