@@ -1,10 +1,14 @@
-<div class="col-md-12">
-  <div class="card card-container">
-    <div *ngFor="let product of products$ | async">
-      <a [routerLink]="['/products', product.id]">{{product.name}}</a>
-      - {{product.price.toLocaleString('de-CH', {style: 'currency', currency: 'CHF'})}}
-      <!-- TODO use icons -->
-      <i class="bi bi-cart-plus-fill" (click)="addToCart(product)">+</i>
+<h2>Products</h2>
+<div class="card-wrapper">
+  <div class="card" *ngFor="let product of products$ | async">
+    <img class="card-img-top"
+         src="https://www.geiger-chemie.de/wp-content/uploads/2020/04/orionthemes-placeholder-image.png"
+         alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title"><a [routerLink]="['/products', product.id]">{{product.name}}</a></h5>
+      <p class="card-text">{{product.description}}</p>
+      <p>{{product.price.toLocaleString('de-CH', {style: 'currency', currency: 'CHF'})}}</p>
+      <button (click)="addToCart(product)" class="btn btn-primary">Add to cart</button>
     </div>
   </div>
 </div>

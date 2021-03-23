@@ -26,7 +26,7 @@ public class Product extends Persistence {
   private String name;
 
   @NotNull
-  @Column(nullable = false, name = "description")
+  @Column(nullable = false, name = "description", length = 2000)
   private String description;
 
   @NotNull

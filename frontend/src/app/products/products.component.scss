@@ -1,0 +1,20 @@
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  margin: .5rem;
+}
+
+.card-text {
+  height: 150px;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+.card,
+.card-img-top {
+  width: 16rem;
+}

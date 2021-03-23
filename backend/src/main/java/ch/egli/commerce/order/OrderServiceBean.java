@@ -87,6 +87,7 @@ public class OrderServiceBean implements OrderService {
     op.setOrder(order);
     op.setProduct(fetched);
 
+    // FIXME if stock drops below 0 order procedure should be aborted and some exception thrown
     fetched.setStock(fetched.getStock() - op.getQuantity());
 
     return op;
