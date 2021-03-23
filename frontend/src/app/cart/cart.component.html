@@ -1,13 +1,13 @@
-<h2>Cart</h2>
+<h2>Cart&nbsp;<span class="badge badge-success">1</span></h2>
 <div *ngIf="(items$ | async).length > 0; else nope">
   <div *ngFor="let item of (items$ | async)">
     <!-- TODO use font awesome icons or smth like that -->
     <a [routerLink]="['/products', item.id]">{{item.name}}</a> - {{item.amount}}
-    <button (click)="remove(item.id)" class="btn-small btn-danger">X</button>
+    <button (click)="remove(item.id)" class="btn btn-sm btn-outline-danger">X</button>
   </div>
   <p>Total: 15 CHF</p>
-  <button routerLink="/checkout" class="btn btn-primary">Checkout</button>
+  <button routerLink="/checkout" class="btn btn-outline-success">Checkout</button>
 </div>
 
-<ng-template #nope><span>No items in cart</span></ng-template>
+<ng-template #nope><span><i>No items in cart.</i></span></ng-template>
 

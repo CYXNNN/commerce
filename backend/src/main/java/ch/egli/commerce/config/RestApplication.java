@@ -5,5 +5,11 @@ import javax.ws.rs.core.Application;
 
 @ApplicationPath("/")
 public class RestApplication extends Application {
-  // Left empty
+
+  /*@Override
+  public Set<Object> getSingletons() {
+    Set<Object> set = new HashSet<>();
+    set.add(new BaseExceptionMapper());
+    return set;
+  }*/
 }

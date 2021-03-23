@@ -1,9 +1,14 @@
-<div *ngIf="product">
-  {{product.name}} - {{product.price.toLocaleString('de-CH', {style: 'currency', currency: 'CHF'})}}
-  <br>{{product.description}}
-  <br>
-  <button (click)="addToCart()">+</button>
+<div class="row">
+  <div class="col-md-8">
+    <div *ngIf="product">
+      {{product.name}} - {{product.price.toLocaleString('de-CH',
+      {style: 'currency', currency: 'CHF'})}}
+      <br>{{product.description}}
+      <br>
+      <button (click)="addToCart()">+</button>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <app-cart></app-cart>
+  </div>
 </div>
-
-
-<app-cart></app-cart>

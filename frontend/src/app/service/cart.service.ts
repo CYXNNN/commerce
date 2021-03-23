@@ -34,15 +34,18 @@ export class CartService {
 
     // add item to store
     this.items.push(item);
-
   }
 
   public remove(id: string): Observable<Orderable[]> {
     this.items = this.items.filter(obj => obj.id !== id);
-    return this.getObservable();
+    return this.observable();
   }
 
-  public getObservable(): Observable<Orderable[]> {
+  public reset(): void {
+    this.items = [];
+  }
+
+  public observable(): Observable<Orderable[]> {
     return of(this.items);
   }
 

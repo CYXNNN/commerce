@@ -1,5 +1,6 @@
 package ch.egli.commerce.order;
 
+import ch.egli.commerce.exceptions.ProductOutOfStockException;
 import ch.egli.commerce.order.dto.OrderCreationDTO;
 import ch.egli.commerce.persistence.Order;
 import ch.egli.commerce.persistence.OrderItem;
@@ -88,7 +89,14 @@ public class OrderServiceBean implements OrderService {
     op.setProduct(fetched);
 
     // FIXME if stock drops below 0 order procedure should be aborted and some exception thrown
-    fetched.setStock(fetched.getStock() - op.getQuantity());
+    int newStock = fetched.getStock() - op.getQuantity();
+
+    if (newStock < 0) {
+      throw new ProductOutOfStockException(
+        "Product \"" + fetched.getName() + "\" is not available anymore");
+    }
+
+    fetched.setStock(newStock);
 
     return op;
   }

@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     // get observable of cart service
     // so the cart will update itself on action
-    this.items$ = this.cartService.getObservable();
+    this.items$ = this.cartService.observable();
   }
 
   remove(id: string): void {

@@ -1,6 +1,6 @@
 package ch.egli.commerce.user;
 
-import ch.egli.commerce.exceptions.UserNotFoundException;
+import ch.egli.commerce.exceptions.EntityNotFoundException;
 import ch.egli.commerce.persistence.User;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,13 +21,13 @@ public class UserServiceBean implements UserService {
   private UserRepo userRepo;
 
   @Override
-  public User find(@NotNull final String username) throws UserNotFoundException {
+  public User find(@NotNull final String username) throws EntityNotFoundException {
     LOG.log(Level.FINE, "Find user {0}", username);
 
     try {
       return userRepo.findByUsername(username);
     } catch (NoResultException | NonUniqueResultException e) {
-      throw new UserNotFoundException(username, e);
+      throw new EntityNotFoundException(username + " not found");
     }
   }
 
