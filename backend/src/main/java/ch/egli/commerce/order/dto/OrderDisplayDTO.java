@@ -42,7 +42,7 @@ public class OrderDisplayDTO extends AbstractDTO {
   private Shipment shipment;
 
   public OrderDisplayDTO fromEntity(Order order) {
-    super.fromEntity(this, order);
+    super.fromEntity(order);
 
     order.getItems().forEach(i ->
       this.items.add(new OrderItemDisplayDTO().fromEntity(i))

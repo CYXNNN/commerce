@@ -19,7 +19,7 @@ public class OrderItemDisplayDTO extends AbstractDTO {
 
   public OrderItemDisplayDTO fromEntity(OrderItem item) {
 
-    super.fromEntity(this, item);
+    super.fromEntity(item);
 
     this.setName(item.getProduct().getName());
     this.setDescription(item.getProduct().getDescription());

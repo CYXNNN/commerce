@@ -16,8 +16,12 @@ public class AbstractDTO {
   @NotNull
   private Date creationDate;
 
-  public void fromEntity(AbstractDTO target, Persistence entity) {
-    target.id = entity.getId();
-    target.creationDate = entity.getCreationDate();
+  @NotNull
+  private Date modificationDate;
+
+  public void fromEntity(Persistence entity) {
+    this.id = entity.getId();
+    this.creationDate = entity.getCreationDate();
+    this.modificationDate = entity.getModificationDate();
   }
 }

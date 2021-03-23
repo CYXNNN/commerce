@@ -29,7 +29,7 @@ public class ProductDTO extends AbstractDTO {
   private ProductCategory category;
 
   public ProductDTO fromEntity(@Valid Product entity) {
-    super.fromEntity(this, entity);
+    super.fromEntity(entity);
     this.name = entity.getName();
     this.description = entity.getDescription();
     this.price = entity.getPrice();
