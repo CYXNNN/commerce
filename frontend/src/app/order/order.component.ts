@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Order, OrderService} from "../service/order.service";
+import {OrderCreation, OrderService} from "../service/order.service";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {CartService, Orderable} from "../service/cart.service";
 import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-order',
@@ -10,16 +11,64 @@ import {Observable} from "rxjs";
 })
 export class OrderComponent implements OnInit {
 
-  orders$: Observable<Order[]>;
+  products: Orderable[];
+  order: OrderCreation;
+  form: FormGroup;
 
   constructor(private route: ActivatedRoute,
-              private orderService: OrderService) {
+              private cartService: CartService,
+              private orderService: OrderService,
+              private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
 
-    this.orders$ = this.orderService.get(null);
+    this.products = this.cartService.get();
 
+    //FIXME remove test values
+    this.form = this.fb.group({
+      products: this.fb.array([], Validators.required),
+      senderAddress: this.fb.group({
+        name: ['test1', Validators.required],
+        prename: ['test1', Validators.required],
+        street: ['test1', Validators.required],
+        number: ['test1', Validators.required],
+        zip: ['test1', Validators.required],
+        city: ['test1', Validators.required],
+      }),
+      billingAddress: this.fb.group({
+        name: ['test2', Validators.required],
+        prename: ['test2', Validators.required],
+        street: ['test2', Validators.required],
+        number: ['test2', Validators.required],
+        zip: ['test2', Validators.required],
+        city: ['test2', Validators.required],
+      }),
+      // TODO implement payment methods
+      payment: 'BILL', // nothing else implemented yet
+    })
+
+    this.initProducts(this.products);
   }
 
+  getProducts(): FormArray {
+    return this.form.get('products') as FormArray;
+  }
+
+  private initProducts(productArray: Orderable[]): void {
+    let products = this.form.get('products') as FormArray;
+
+    productArray.forEach(p => {
+      products.push(this.fb.group({id: p.id, name: p.name, quantity: p.amount}));
+    })
+  }
+
+  submit(): void {
+    if (!this.form.valid) {
+      alert('form has errors');
+      return;
+    }
+    const order = this.form.value as OrderCreation;
+    this.orderService.post(order);
+  }
 }

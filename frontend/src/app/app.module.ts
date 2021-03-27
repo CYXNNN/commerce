@@ -11,11 +11,13 @@ import {OrderComponent} from './order/order.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
-import {ProfileComponent} from './profile/profile.component';
 import {HomeComponent} from './home/home.component';
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 import {HttpErrorInterceptor} from "./interceptors/http.interceptor";
-import { ProductOverviewComponent } from './product-overview/product-overview.component';
+import {ProductOverviewComponent} from './product-overview/product-overview.component';
+import {AccordionModule} from "ngx-bootstrap/accordion";
+import {UserComponent} from './user/user.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -26,9 +28,9 @@ import { ProductOverviewComponent } from './product-overview/product-overview.co
     OrderComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent,
     HomeComponent,
-    ProductOverviewComponent
+    ProductOverviewComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,9 @@ import { ProductOverviewComponent } from './product-overview/product-overview.co
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    AccordionModule,
+    BrowserAnimationsModule
   ],
   providers: [
     HttpClientModule,

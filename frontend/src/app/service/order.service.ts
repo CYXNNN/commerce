@@ -17,17 +17,48 @@ export interface Address {
 
 }
 
-export interface OrderItem {
+export interface OrderItemCreation {
   id: string,
   quantity: number,
 }
 
-export interface Order {
+export interface OrderItem extends OrderItemCreation {
+  description: string,
+  name: string,
+  price: number,
+  unitPrice: number,
+  productId: string,
+}
+
+export enum Shipment {
+  WAITING = 'Waiting',
+  ON_THE_WAY = 'On the way',
+  DELIVERED = 'Delivered'
+}
+
+export enum Payment {
+  CREDIT_CARD = 'Credit Card',
+  PRE_PAYMENT = 'Pre payment',
+  BILL = 'Bill'
+}
+
+export interface OrderBase {
   id: string,
   creationDate: Date,
-  products: OrderItem[],
   billingAddress: Address,
   senderAddress: Address,
+}
+
+export interface OrderCreation extends OrderBase {
+  products: OrderItemCreation[],
+}
+
+export interface Order extends OrderBase {
+  shipment: Shipment,
+  payment: Payment,
+  items: OrderItem[],
+  modificationDate: Date,
+  orderTotal: number,
 }
 
 @Injectable({
@@ -38,9 +69,9 @@ export class OrderService {
   constructor(private http: HttpClient, private cartService: CartService) {
   }
 
-  getOrders(): Observable<Order[]> {
+  getOrders(): Observable<OrderCreation[]> {
     // now returns an Observable of Config
-    return this.http.get<Order[]>(BASE_URL);
+    return this.http.get<OrderCreation[]>(BASE_URL);
   }
 
   get(userId: string): Observable<Order[]> {
@@ -50,7 +81,7 @@ export class OrderService {
     return this.http.get<Order[]>(BASE_URL + '/' + userId);
   }
 
-  post(order: Order): void {
+  post(order: OrderCreation): void {
     // now returns an Observable of Config
     this.http.post<any>(BASE_URL, order).subscribe(_ => {
       Swal.fire({

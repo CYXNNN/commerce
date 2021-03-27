@@ -54,6 +54,7 @@ public class OrderRepo {
       .innerJoin(QOrder.order.items).fetchJoin()
       .innerJoin(QOrder.order.billingAddress).fetchJoin()
       .innerJoin(QOrder.order.senderAddress).fetchJoin()
+      .orderBy(QOrder.order.creationDate.desc())
       .fetch();
   }
 }
