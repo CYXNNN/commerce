@@ -17,15 +17,15 @@ export interface Address {
 
 }
 
-export interface OrderProduct {
+export interface OrderItem {
   id: string,
   quantity: number,
 }
 
-export interface PlacedOrder {
+export interface Order {
   id: string,
   creationDate: Date,
-  products: OrderProduct[],
+  products: OrderItem[],
   billingAddress: Address,
   senderAddress: Address,
 }
@@ -38,17 +38,19 @@ export class OrderService {
   constructor(private http: HttpClient, private cartService: CartService) {
   }
 
-  getOrders(): Observable<PlacedOrder[]> {
+  getOrders(): Observable<Order[]> {
     // now returns an Observable of Config
-    return this.http.get<PlacedOrder[]>(BASE_URL);
+    return this.http.get<Order[]>(BASE_URL);
   }
 
-  get(userId: string): Observable<PlacedOrder> {
+  get(userId: string): Observable<Order[]> {
+    // FIXME remove user id
+    userId = '4028b881785bcc1e01785bcc54210000';
     // now returns an Observable of Config
-    return this.http.get<PlacedOrder>(BASE_URL + '/' + userId);
+    return this.http.get<Order[]>(BASE_URL + '/' + userId);
   }
 
-  post(order: PlacedOrder): void {
+  post(order: Order): void {
     // now returns an Observable of Config
     this.http.post<any>(BASE_URL, order).subscribe(_ => {
       Swal.fire({

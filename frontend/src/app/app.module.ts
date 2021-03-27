@@ -15,6 +15,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {HomeComponent} from './home/home.component';
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 import {HttpErrorInterceptor} from "./interceptors/http.interceptor";
+import { ProductOverviewComponent } from './product-overview/product-overview.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {HttpErrorInterceptor} from "./interceptors/http.interceptor";
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    ProductOverviewComponent
   ],
   imports: [
     BrowserModule,

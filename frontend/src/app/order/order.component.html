@@ -1,67 +1,8 @@
-<form [formGroup]="form">
-  <div formArrayName="products">
-    <h2>Products</h2>
-    <div *ngFor="let product of getProducts().controls; let i=index">
-      <div [formGroupName]="i">
-        <input readonly formControlName="name"/>
-        <input type='number' formControlName="quantity"/>
-      </div>
-    </div>
-  </div>
-  <h2>Receiver Address</h2>
-  <div formGroupName="billingAddress">
-    <div class="form-group">
-      <label for="prename">Vorname</label>
-      <input id="prename" formControlName="prename" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" formControlName="name" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="street">Strasse</label>
-      <input id="street" formControlName="street" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="number">Nr.</label>
-      <input id="number" formControlName="number" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="zip">PLZ</label>
-      <input id="zip" formControlName="zip" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="city">Ort</label>
-      <input id="city" formControlName="city" type="text"/>
-    </div>
-  </div>
-  <h2>Sender Address</h2>
-  <div formGroupName="senderAddress">
-    <div class="form-group">
-      <label for="s_prename">Vorname</label>
-      <input id="s_prename" formControlName="prename" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_name">Name</label>
-      <input id="s_name" formControlName="name" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_street">Strasse</label>
-      <input id="s_street" formControlName="street" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_number">Nr.</label>
-      <input id="s_number" formControlName="number" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_zip">PLZ</label>
-      <input id="s_zip" formControlName="zip" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_city">Ort</label>
-      <input id="s_city" formControlName="city" type="text"/>
-    </div>
-  </div>
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+  <ngb-panel title="test" *ngFor="orders$ | async as order">
+    <ng-template ngbPanelContent>
 
-  <button (click)="submit()">Submit</button>
-</form>
+
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

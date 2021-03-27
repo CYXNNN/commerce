@@ -8,7 +8,8 @@
 <div class="row">
   <div class="col-md-8">
     <h2>Newest Products&nbsp;<span class="badge badge-info badge-danger">NEW</span></h2>
-    <app-products></app-products>
+    <app-products [products$]="newest$"></app-products>
+    <button class="btn btn-outline-success" routerLink="/products">&raquo; See all</button>
   </div>
   <div class="col-md-4">
     <app-cart></app-cart>

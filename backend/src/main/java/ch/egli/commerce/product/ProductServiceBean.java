@@ -1,5 +1,6 @@
 package ch.egli.commerce.product;
 
+import ch.egli.commerce.enumeration.ProductSortOptions;
 import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.product.dto.ProductCreationDTO;
 import ch.egli.commerce.product.dto.ProductDTO;
@@ -29,8 +30,13 @@ public class ProductServiceBean implements ProductService {
   }
 
   @Override
-  public Collection<Product> getAll() {
-    return productRepo.getAll();
+  public Collection<Product> getAll(ProductSortOptions options) {
+    return productRepo.getAll(options);
+  }
+
+  @Override
+  public Collection<Product> getNewest(int limit) {
+    return productRepo.getNewest(limit);
   }
 
   @Override

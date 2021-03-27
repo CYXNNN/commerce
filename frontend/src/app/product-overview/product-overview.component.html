@@ -1,0 +1,5 @@
+<h2>Products</h2>
+<select (change)="reload()" class="form-select" [(ngModel)]="selected">
+  <option [ngValue]="option.value" *ngFor="let option of options">{{option.label}}</option>
+</select>
+<app-products [products$]="products$"></app-products>

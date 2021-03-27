@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ProductService} from "../service/product.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  newest$ = new Observable<any>();
+
+  constructor(private productService: ProductService) {
+  }
 
   ngOnInit(): void {
+    this.newest$ = this.productService.getNewest(4);
   }
 
 }

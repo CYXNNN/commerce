@@ -22,12 +22,20 @@ export interface Product {
   providedIn: 'root',
 })
 export class ProductService {
+
+  filter = '';
+
   constructor(private http: HttpClient) {
   }
 
-  getProducts(): Observable<Product[]> {
+  getProducts(sortOption: string): Observable<Product[]> {
     // now returns an Observable of Config
-    return this.http.get<Product[]>(BASE_URL);
+    return this.http.get<Product[]>(BASE_URL + "/all/" + sortOption);
+  }
+
+  getNewest(limit: number): Observable<Product[]> {
+    // now returns an Observable of Config
+    return this.http.get<Product[]>(BASE_URL + '/newest/' + limit);
   }
 
   get(id: string): Observable<Product> {

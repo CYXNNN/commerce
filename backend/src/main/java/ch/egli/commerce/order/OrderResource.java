@@ -50,6 +50,7 @@ public class OrderResource {
   @Produces(APPLICATION_JSON)
   @PermitAll
   public List<OrderDisplayDTO> getOrdersOfUser(@PathParam("userId") @NotNull @Valid String userId) {
+    // FIXME use principal for id and/or AuthorizerCheck
     return orderService.getByUser(userId)
       .stream()
       .map(o -> new OrderDisplayDTO().fromEntity(o))

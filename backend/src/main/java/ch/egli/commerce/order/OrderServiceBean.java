@@ -5,7 +5,6 @@ import ch.egli.commerce.order.dto.OrderCreationDTO;
 import ch.egli.commerce.persistence.Order;
 import ch.egli.commerce.persistence.OrderItem;
 import ch.egli.commerce.persistence.Product;
-import ch.egli.commerce.persistence.User;
 import ch.egli.commerce.product.ProductRepo;
 import ch.egli.commerce.product.dto.OrderProductDTO;
 import ch.egli.commerce.user.UserRepo;
@@ -45,13 +44,13 @@ public class OrderServiceBean implements OrderService {
 
     Order order = new Order();
 
-    List<OrderItem> products = createOrderProducts(dto, order);
+    var products = createOrderProducts(dto, order);
     order.setItems(products);
 
     // calculate order total
-    Double total = products.stream()
+    var total = products.stream()
       .map(OrderItem::totalItemPrice)
-      .reduce(new Double(0), Double::sum);
+      .reduce((double) 0, Double::sum);
 
     // FIXME round price
     order.setOrderTotal(total);
@@ -67,7 +66,7 @@ public class OrderServiceBean implements OrderService {
   }
 
   private List<OrderItem> createOrderProducts(OrderCreationDTO dto, Order order) {
-    List<OrderItem> products = dto.getProducts()
+    var products = dto.getProducts()
       .stream()
       .map(p -> createOrderProduct(p, order))
       .collect(Collectors.toList());
@@ -75,8 +74,8 @@ public class OrderServiceBean implements OrderService {
   }
 
   private OrderItem createOrderProduct(OrderProductDTO p, Order order) {
-    OrderItem op = new OrderItem();
-    Product fetched = productRepo.find(p.getId());
+    var op = new OrderItem();
+    var fetched = productRepo.find(p.getId());
 
     if (fetched == null) {
       LOG.log(Level.SEVERE, "Product with id: " + p.getId() + " is not present in the database");
@@ -88,8 +87,14 @@ public class OrderServiceBean implements OrderService {
     op.setOrder(order);
     op.setProduct(fetched);
 
+    updateStock(op, fetched);
+
+    return op;
+  }
+
+  private void updateStock(OrderItem op, Product fetched) {
     // FIXME if stock drops below 0 order procedure should be aborted and some exception thrown
-    int newStock = fetched.getStock() - op.getQuantity();
+    var newStock = fetched.getStock() - op.getQuantity();
 
     if (newStock < 0) {
       throw new ProductOutOfStockException(
@@ -97,13 +102,11 @@ public class OrderServiceBean implements OrderService {
     }
 
     fetched.setStock(newStock);
-
-    return op;
   }
 
   @Override
   public List<Order> getByUser(String userId) {
-    User user = userRepo.findById(userId);
+    var user = userRepo.findById(userId);
     return orderRepo.findByUser(user);
   }
 

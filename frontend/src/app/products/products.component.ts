@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ProductService} from "../service/product.service";
 import {Observable} from "rxjs";
 import {CartService, Orderable} from "../service/cart.service";
@@ -10,14 +10,14 @@ import {CartService, Orderable} from "../service/cart.service";
 })
 export class ProductsComponent implements OnInit {
 
-  products$: Observable<any>;
+  @Input()
+  products$!: Observable<any>;
 
   constructor(private productService: ProductService,
               private cartService: CartService) {
   }
 
   ngOnInit(): void {
-    this.products$ = this.productService.getProducts();
   }
 
   public addToCart(product: Orderable): void {

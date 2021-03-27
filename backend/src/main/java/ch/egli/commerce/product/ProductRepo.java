@@ -1,6 +1,7 @@
 package ch.egli.commerce.product;
 
 import ch.egli.commerce.config.Database;
+import ch.egli.commerce.enumeration.ProductSortOptions;
 import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.persistence.QProduct;
 import java.util.List;
@@ -23,8 +24,32 @@ public class ProductRepo {
     this.database = database;
   }
 
-  public List<Product> getAll() {
-    return database.query().from(QProduct.product).fetch();
+  public List<Product> getAll(ProductSortOptions options) {
+    var query = database.queryFactory().from(QProduct.product);
+
+    switch (options) {
+      case PRICE_ASC:
+        query.orderBy(QProduct.product.price.asc());
+        break;
+      case PRICE_DESC:
+        query.orderBy(QProduct.product.price.desc());
+        break;
+      case CREATION_DATE_ASC:
+        query.orderBy(QProduct.product.creationDate.asc());
+        break;
+      case CREATION_DATE_DESC:
+        query.orderBy(QProduct.product.creationDate.desc());
+        break;
+    }
+
+    return (List<Product>) query.fetch();
+  }
+
+  public List<Product> getNewest(int limit) {
+    return (List<Product>) database.queryFactory().from(QProduct.product)
+      .limit(limit)
+      .orderBy(QProduct.product.creationDate.desc())
+      .fetch();
   }
 
   public void post(Product product) {

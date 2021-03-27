@@ -1,5 +1,6 @@
-package ch.egli.commerce.exceptions;
+package ch.egli.commerce.config;
 
+import ch.egli.commerce.exceptions.BaseException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;

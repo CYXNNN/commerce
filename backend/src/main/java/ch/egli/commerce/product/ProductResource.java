@@ -4,6 +4,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.WILDCARD;
 
 import ch.egli.commerce.enumeration.ProductCategory;
+import ch.egli.commerce.enumeration.ProductSortOptions;
 import ch.egli.commerce.enumeration.UserRole;
 import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.persistence.User;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -48,13 +50,25 @@ public class ProductResource {
   }
 
   @GET
-  @Path("")
+  @Path("/all/{options}")
   @Produces(APPLICATION_JSON)
   @PermitAll
-  public List<ProductDTO> getProducts() {
+  public List<ProductDTO> getAll(
+    @PathParam("options") @DefaultValue("NONE") ProductSortOptions options) {
     // FIXME in any later version: performance -> pagination
     //  we should never select *, rather pass limits from client
-    return productService.getAll()
+    return productService.getAll(options)
+      .stream()
+      .map(p -> new ProductDTO().fromEntity(p))
+      .collect(Collectors.toList());
+  }
+
+  @GET
+  @Path("/newest/{limit}")
+  @Produces(APPLICATION_JSON)
+  @PermitAll
+  public List<ProductDTO> getNewest(@PathParam("limit") @DefaultValue("4") int limit) {
+    return productService.getNewest(limit)
       .stream()
       .map(p -> new ProductDTO().fromEntity(p))
       .collect(Collectors.toList());

@@ -1,5 +1,6 @@
 package ch.egli.commerce.product;
 
+import ch.egli.commerce.enumeration.ProductSortOptions;
 import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.product.dto.ProductCreationDTO;
 import ch.egli.commerce.product.dto.ProductDTO;
@@ -7,7 +8,9 @@ import java.util.Collection;
 
 public interface ProductService {
 
-  Collection<Product> getAll();
+  Collection<Product> getAll(ProductSortOptions options);
+
+  Collection<Product> getNewest(int limit);
 
   Product find(String id);
 

@@ -7,6 +7,7 @@
       <h5 class="card-title"><a [routerLink]="['/products', product.id]">{{product.name}}</a></h5>
       <p class="card-text">{{product.description}}</p>
       <p>{{product.price.toLocaleString('de-CH', {style: 'currency', currency: 'CHF'})}}</p>
+      <p>Stock: {{product.stock}}</p>
       <button (click)="addToCart(product)" class="btn btn-outline-primary"
               [disabled]="product.stock <= 0">Add to cart
       </button>
