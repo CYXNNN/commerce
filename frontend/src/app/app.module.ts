@@ -18,6 +18,7 @@ import {ProductOverviewComponent} from './product-overview/product-overview.comp
 import {AccordionModule} from "ngx-bootstrap/accordion";
 import {UserComponent} from './user/user.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     RegisterComponent,
     HomeComponent,
     ProductOverviewComponent,
-    UserComponent
+    UserComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
