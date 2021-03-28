@@ -70,3 +70,9 @@ export interface Product extends Persistence {
   category: ProductCategory,
   deleted: boolean,
 }
+
+export type SortOption = 'NONE' |
+  'PRICE_DESC' |
+  'PRICE_ASC' |
+  'CREATION_DATE_DESC' |
+  'CREATION_DATE_ASC';

@@ -21,6 +21,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AdminComponent} from './admin/admin.component';
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {ModalModule} from "ngx-bootstrap/modal";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {ModalModule} from "ngx-bootstrap/modal";
     AccordionModule,
     BrowserAnimationsModule,
     TabsModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [
     HttpClientModule,

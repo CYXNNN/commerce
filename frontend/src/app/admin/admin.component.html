@@ -3,32 +3,35 @@
   <tabset>
     <tab heading="Products">
       <ng-container *ngIf="products$ | async">
-        <div class="create">
-          <button class="btn btn-outline-success" (click)="open(productModal)">+</button>
-        </div>
         <table>
           <thead>
           <th>Name</th>
+          <th>Category</th>
           <th>Price</th>
           <th>Stock</th>
-          <th></th>
-          <th></th>
+          <th class="actionlink"></th>
+          <th class="actionlink">
+            <button class="btn btn-outline-success" (click)="open(productModal)">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </th>
           </thead>
 
           <tr *ngFor="let product of products$ | async">
             <td>{{product.name}}</td>
+            <td>{{product.category}}</td>
             <td>{{toMoney(product.price)}}</td>
             <td>{{product.stock}}</td>
             <td>
-              <button type="button" class="btn btn-outline-success"
+              <button type="button" class="btn btn-outline-secondary"
                       (click)="editProduct(product, productModal)">
-                E
+                <fa-icon [icon]="faEdit"></fa-icon>
               </button>
             </td>
             <td>
               <button type="button" class="btn btn-outline-danger"
                       (click)="removeProduct(product.id)">
-                &times;
+                <fa-icon [icon]="faCross"></fa-icon>
               </button>
             </td>
           </tr>
@@ -44,7 +47,6 @@
           <th>Shipping Address</th>
           <th>Total</th>
           <th></th>
-          <th></th>
           </thead>
 
           <tr *ngFor="let order of orders$ | async">
@@ -53,7 +55,6 @@
             <td>{{toAddressString(order.senderAddress)}}</td>
             <td>{{toMoney(order.orderTotal)}}</td>
             <td>E</td>
-            <td>X</td>
           </tr>
         </table>
       </ng-container>

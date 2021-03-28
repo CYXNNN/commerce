@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
-import {Product} from "../util/interfaces";
+import {Product, SortOption} from "../util/interfaces";
 
 const BASE_URL = 'http://127.0.0.1:8080/commerce/product/v1'
 
@@ -15,7 +15,7 @@ export class ProductService {
   }
 
 
-  getProducts(sortOption: string): Observable<Product[]> {
+  getProducts(sortOption: SortOption): Observable<Product[]> {
     // now returns an Observable of Config
     return this.http.get<Product[]>(BASE_URL + "/all/" + sortOption);
   }

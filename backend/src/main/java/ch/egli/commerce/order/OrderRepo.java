@@ -27,7 +27,10 @@ public class OrderRepo {
   }
 
   public List<Order> getAll() {
-    return database.query().from(QOrder.order).fetch();
+    return (List<Order>) database.queryFactory()
+      .from(QOrder.order)
+      .orderBy(QOrder.order.creationDate.desc())
+      .fetch();
   }
 
   public void post(Order order) {
@@ -50,9 +53,6 @@ public class OrderRepo {
   public List<Order> findByUser(User user) {
     return (List<Order>) database.queryFactory().from(QOrder.order)
       .where(QOrder.order.user.eq(user))
-      .innerJoin(QOrder.order.items).fetchJoin()
-      .innerJoin(QOrder.order.billingAddress).fetchJoin()
-      .innerJoin(QOrder.order.senderAddress).fetchJoin()
       .orderBy(QOrder.order.creationDate.desc())
       .fetch();
   }

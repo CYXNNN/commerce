@@ -7,6 +7,7 @@ import {toAddressString, toMoney} from '../util/utils';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
+import {faEdit, faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-admin',
@@ -26,6 +27,9 @@ export class AdminComponent implements OnInit {
 
   toMoney = toMoney;
   toAddressString = toAddressString;
+  faCross = faTimes;
+  faEdit = faEdit;
+  faPlus = faPlus;
   modalRef: BsModalRef;
   productForm: FormGroup;
 
@@ -108,7 +112,7 @@ export class AdminComponent implements OnInit {
   }
 
   fetchProducts(): void {
-    this.products$ = this.productService.getProducts('NONE');
+    this.products$ = this.productService.getProducts('CREATION_DATE_DESC');
   }
 
 }

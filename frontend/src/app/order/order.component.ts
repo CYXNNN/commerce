@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../service/order.service";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CartService, Orderable} from "../service/cart.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {OrderCreation} from "../util/interfaces";
 import Swal from "sweetalert2";
 
@@ -20,16 +20,23 @@ export class OrderComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private cartService: CartService,
               private orderService: OrderService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private router: Router) {
   }
 
   ngOnInit(): void {
 
     this.products = this.cartService.get();
 
-    //FIXME remove test values
+    //FIXME set user default addresses for easier use
     this.form = this.fb.group({
-      products: this.fb.array([], Validators.required),
+      products: this.fb.array([
+        this.fb.group({
+          id: [undefined, Validators.required],
+          name: [undefined, Validators.required],
+          quantity: [undefined, [Validators.required, Validators.min(1)]]
+        })
+      ]),
       senderAddress: this.fb.group({
         name: ['test1', Validators.required],
         prename: ['test1', Validators.required],
@@ -46,8 +53,7 @@ export class OrderComponent implements OnInit {
         zip: ['test2', Validators.required],
         city: ['test2', Validators.required],
       }),
-      // TODO implement payment methods
-      payment: 'BILL', // nothing else implemented yet
+      payment: ['CREDIT_CARD', Validators.required]
     })
 
     this.initProducts(this.products);
@@ -59,7 +65,7 @@ export class OrderComponent implements OnInit {
 
   private initProducts(productArray: Orderable[]): void {
     let products = this.form.get('products') as FormArray;
-
+    products.clear();
     productArray.forEach(p => {
       products.push(this.fb.group({id: p.id, name: p.name, quantity: p.amount}));
     })
@@ -77,6 +83,16 @@ export class OrderComponent implements OnInit {
       return;
     }
     const order = this.form.value as OrderCreation;
-    this.orderService.post(order);
+    this.orderService.post(order).subscribe(_ => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Order has been placed',
+        showConfirmButton: false,
+        timer: 2000
+      })
+      this.router.navigate(['user']);
+      this.cartService.reset();
+    });
   }
 }

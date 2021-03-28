@@ -1,5 +1,7 @@
 package ch.egli.commerce.order;
 
+import ch.egli.commerce.exceptions.EntityNotFoundException;
+import ch.egli.commerce.exceptions.IllegalQuantityException;
 import ch.egli.commerce.exceptions.ProductOutOfStockException;
 import ch.egli.commerce.order.dto.OrderCreationDTO;
 import ch.egli.commerce.persistence.Order;
@@ -47,6 +49,8 @@ public class OrderServiceBean implements OrderService {
     var products = createOrderProducts(dto, order);
     order.setItems(products);
 
+    order.setPaymentOption(dto.getPayment());
+
     // calculate order total
     var total = products.stream()
       .map(OrderItem::totalItemPrice)
@@ -79,7 +83,11 @@ public class OrderServiceBean implements OrderService {
 
     if (fetched == null) {
       LOG.log(Level.SEVERE, "Product with id: " + p.getId() + " is not present in the database");
-      throw new NullPointerException("You tried to order a product which is not present");
+      throw new EntityNotFoundException("You tried to order a product which is not present");
+    }
+
+    if (p.getQuantity() < 1) {
+      throw new IllegalQuantityException("Order at least one of each product you want to order");
     }
 
     op.setQuantity(p.getQuantity());

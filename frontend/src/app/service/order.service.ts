@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
-import Swal from "sweetalert2";
 import {CartService} from "./cart.service";
 import {Order, OrderCreation} from "../util/interfaces";
 
@@ -25,16 +24,7 @@ export class OrderService {
     return this.http.get<Order[]>(BASE_URL + '/' + userId);
   }
 
-  post(order: OrderCreation): void {
-    this.http.post<any>(BASE_URL, order).subscribe(_ => {
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Order has been placed',
-        showConfirmButton: false,
-        timer: 2000
-      })
-      this.cartService.reset();
-    });
+  post(order: OrderCreation): Observable<any> {
+    return this.http.post<any>(BASE_URL, order);
   }
 }

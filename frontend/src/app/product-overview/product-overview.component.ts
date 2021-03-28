@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {ProductService} from "../service/product.service";
+import {SortOption} from "../util/interfaces";
 
 @Component({
   selector: 'app-product-overview',
@@ -22,7 +23,7 @@ export class ProductOverviewComponent implements OnInit {
     label: 'Älteste zuerst', value: 'CREATION_DATE_ASC'
   }];
 
-  selected = 'NONE'
+  selected: SortOption = 'NONE';
 
   constructor(private productService: ProductService) {
 

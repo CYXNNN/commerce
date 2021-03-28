@@ -5,7 +5,9 @@
       {style: 'currency', currency: 'CHF'})}}
       <br>{{product.description}}
       <br>
-      <button (click)="addToCart()">+</button>
+      <button (click)="addToCart()" class="btn btn-outline-primary"
+              [disabled]="product.stock <= 0 || product.deleted">Add to cart
+      </button>
     </div>
   </div>
   <div class="col-md-4">

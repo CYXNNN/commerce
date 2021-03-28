@@ -1,67 +1,147 @@
 <form [formGroup]="form">
-  <div formArrayName="products">
-    <h2>Products</h2>
-    <div *ngFor="let product of getProducts().controls; let i=index">
-      <div [formGroupName]="i">
-        <input readonly formControlName="name"/>
-        <input type='number' formControlName="quantity"/>
+
+  <div class="form-row col-md-12">
+    <div class="col-md-5" formArrayName="products">
+      <h2>Products</h2>
+      <ng-container *ngFor="let product of getProducts().controls; let i=index">
+        <div class="form-group" [formGroupName]="i">
+
+          <div class="form-row">
+            <div class="form-group col-md-10 docked">
+              <input class="form-control" readonly formControlName="name"/>
+            </div>
+            <div class="form-group col-md-2">
+              <input class="form-control" type='number' formControlName="quantity"/>
+            </div>
+
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+      <h2>Order Total</h2>
+      230 CHF
+      <h2>Payment</h2>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="BILL" formControlName="payment">
+        <label class="form-check-label">
+          <span>Bill</span>
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="PRE_PAYMENT"
+               formControlName="payment">
+        <label class="form-check-label">
+          <span>Pre Payment</span>
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="CREDIT_CARD"
+               formControlName="payment">
+        <label class="form-check-label">
+          <span>Credit Card</span>
+        </label>
       </div>
     </div>
   </div>
-  <h2>Receiver Address</h2>
-  <div formGroupName="billingAddress">
-    <div class="form-group">
-      <label for="prename">Vorname</label>
-      <input id="prename" formControlName="prename" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" formControlName="name" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="street">Strasse</label>
-      <input id="street" formControlName="street" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="number">Nr.</label>
-      <input id="number" formControlName="number" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="zip">PLZ</label>
-      <input id="zip" formControlName="zip" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="city">Ort</label>
-      <input id="city" formControlName="city" type="text"/>
-    </div>
-  </div>
-  <h2>Sender Address</h2>
-  <div formGroupName="senderAddress">
-    <div class="form-group">
-      <label for="s_prename">Vorname</label>
-      <input id="s_prename" formControlName="prename" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_name">Name</label>
-      <input id="s_name" formControlName="name" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_street">Strasse</label>
-      <input id="s_street" formControlName="street" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_number">Nr.</label>
-      <input id="s_number" formControlName="number" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_zip">PLZ</label>
-      <input id="s_zip" formControlName="zip" type="text"/>
-    </div>
-    <div class="form-group">
-      <label for="s_city">Ort</label>
-      <input id="s_city" formControlName="city" type="text"/>
-    </div>
-  </div>
+  <hr>
+  <div class="form-row col-md-12">
+    <div class="col-md-5" formGroupName="billingAddress">
+      <h2>Billing Address</h2>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="prename">
+            Vorname
+            <input class="form-control" id="prename" formControlName="prename" type="text"/>
+          </label>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="name">
+            Name
+            <input class="form-control" id="name" formControlName="name" type="text"/>
+          </label>
+        </div>
+      </div>
 
-  <button (click)="submit()">Submit</button>
+      <div class="form-row">
+        <div class="form-group col-md-9">
+          <label for="street">
+            Strasse
+            <input class="form-control" id="street" formControlName="street" type="text"/>
+          </label>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="number">
+            Nr.
+            <input class="form-control" id="number" formControlName="number" type="text"/>
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="zip">
+            PLZ
+            <input class="form-control" id="zip" formControlName="zip" type="text"/>
+          </label>
+        </div>
+        <div class="form-group col-md-9">
+          <label for="city">
+            Ort
+            <input class="form-control" id="city" formControlName="city" type="text"/>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5" formGroupName="senderAddress">
+      <h2>Shipping Address</h2>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="sprename">
+            Vorname
+            <input class="form-control" id="sprename" formControlName="prename" type="text"/>
+          </label>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="sname">
+            Name
+            <input class="form-control" id="sname" formControlName="name" type="text"/>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-9">
+          <label for="sstreet">
+            Strasse
+            <input class="form-control" id="sstreet" formControlName="street" type="text"/>
+          </label>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="snumber">
+            Nr.
+            <input class="form-control" id="snumber" formControlName="number" type="text"/>
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="szip">
+            PLZ
+            <input class="form-control" id="szip" formControlName="zip" type="text"/>
+          </label>
+        </div>
+        <div class="form-group col-md-9">
+          <label for="scity">
+            Ort
+            <input class="form-control" id="scity" formControlName="city" type="text"/>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row col-md-12">
+      <button class="btn btn-outline-success float-right" (click)="submit()">Place Order</button>
+    </div>
+  </div>
 </form>
