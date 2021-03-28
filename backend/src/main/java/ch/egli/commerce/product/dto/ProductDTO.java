@@ -28,6 +28,8 @@ public class ProductDTO extends AbstractDTO {
   @NotNull
   private ProductCategory category;
 
+  private boolean deleted;
+
   public ProductDTO fromEntity(@Valid Product entity) {
     super.fromEntity(entity);
     this.name = entity.getName();
@@ -35,6 +37,7 @@ public class ProductDTO extends AbstractDTO {
     this.price = entity.getPrice();
     this.stock = entity.getStock();
     this.category = entity.getCategory();
+    this.deleted = entity.isDeleted();
 
     return this;
   }

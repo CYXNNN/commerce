@@ -4,13 +4,11 @@ package ch.egli.commerce.enumeration;
 //  too much work for now tho
 public enum ProductCategory {
   FOOD("Food"),
-  DRINK("Drink"),
-  UTILS("Utilities");
+  DRINK("Drink");
 
   private String displayName;
 
   ProductCategory(String displayName) {
-    this.displayName = displayName
-    ;
+    this.displayName = displayName;
   }
 }

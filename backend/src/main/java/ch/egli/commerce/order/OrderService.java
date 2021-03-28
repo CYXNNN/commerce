@@ -10,6 +10,6 @@ public interface OrderService {
 
   List<Order> getByUser(String userId);
 
-  List<Order> getByUser();
+  List<Order> get();
 
 }

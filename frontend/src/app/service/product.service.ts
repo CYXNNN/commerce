@@ -1,32 +1,19 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
+import {Product} from "../util/interfaces";
 
 const BASE_URL = 'http://127.0.0.1:8080/commerce/product/v1'
-const options = {
-  headers: new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-  })
-};
 
-export interface Product {
-  id: string,
-  creationDate: Date,
-  name: string,
-  description: string,
-  price: number,
-  stock: number,
-}
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
 
-  filter = '';
-
   constructor(private http: HttpClient) {
   }
+
 
   getProducts(sortOption: string): Observable<Product[]> {
     // now returns an Observable of Config
@@ -43,13 +30,17 @@ export class ProductService {
     return this.http.get<Product>(BASE_URL + '/' + id);
   }
 
-  post(product: any): Observable<any> {
+  post(product: Product): Observable<Product> {
     // now returns an Observable of Config
-    return this.http.post<any>(BASE_URL, product, options);
+    return this.http.post<Product>(BASE_URL, product);
   }
 
-  put(product: any): Observable<any> {
+  put(product: Product): Observable<Product> {
     // now returns an Observable of Config
-    return this.http.put<any>(BASE_URL, product, options);
+    return this.http.put<Product>(BASE_URL, product);
+  }
+
+  delete(id: string): Observable<any> {
+    return this.http.delete(BASE_URL + '/' + id);
   }
 }

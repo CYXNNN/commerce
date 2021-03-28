@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {OrderCreation, OrderService} from "../service/order.service";
+import {OrderService} from "../service/order.service";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CartService, Orderable} from "../service/cart.service";
 import {ActivatedRoute} from "@angular/router";
+import {OrderCreation} from "../util/interfaces";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-order',
@@ -65,7 +67,13 @@ export class OrderComponent implements OnInit {
 
   submit(): void {
     if (!this.form.valid) {
-      alert('form has errors');
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Form is not valid',
+        showConfirmButton: true,
+        confirmButtonText: 'Fuck'
+      })
       return;
     }
     const order = this.form.value as OrderCreation;

@@ -3,7 +3,6 @@ package ch.egli.commerce.product;
 import ch.egli.commerce.enumeration.ProductSortOptions;
 import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.product.dto.ProductCreationDTO;
-import ch.egli.commerce.product.dto.ProductDTO;
 import java.util.Collection;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -40,21 +39,24 @@ public class ProductServiceBean implements ProductService {
   }
 
   @Override
-  public Product update(ProductDTO productDTO) {
+  public Product update(ProductCreationDTO productDTO) {
     Product target = productRepo.find(productDTO.getId());
     return productRepo.put(productDTO.toEntity(target));
   }
 
   @Override
-  public void post(ProductCreationDTO creationDTO) {
+  public Product post(ProductCreationDTO creationDTO) {
 
     Product p = creationDTO.toEntity(new Product());
     productRepo.post(p);
+
+    return p;
   }
 
   @Override
   public void delete(String id) {
     Product toDelete = productRepo.find(id);
-    productRepo.delete(toDelete);
+    toDelete.setDeleted(true);
+    productRepo.put(toDelete);
   }
 }

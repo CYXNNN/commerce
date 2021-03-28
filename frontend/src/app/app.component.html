@@ -9,17 +9,18 @@
     </button>
     <div class="navbar-collapse collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto" routerLinkActive="active">
-        <li class="nav-item" *ngIf="showAdminBoard">
-          <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
+        <li class="nav-item">
+          <a routerLink="/products" class="nav-link">Products</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/products" class="nav-link" routerLinkActive="active">Products</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/cart" class="nav-link" routerLinkActive="active">Cart</a></li>
+          <a routerLink="/cart" class="nav-link">Cart</a></li>
         <li class="nav-item">
           <!-- FIXME if logged id -->
-          <a href="/user" class="nav-link" *ngIf="!isLoggedIn" routerLink="user">User</a>
+          <a class="nav-link" *ngIf="!isLoggedIn" routerLink="user">User</a>
+        </li>
+        <li class="nav-item">
+          <!-- FIXME if logged id and admin permission -->
+          <a class="nav-link" *ngIf="!isLoggedIn" routerLink="admin">Admin</a>
         </li>
       </ul>
 

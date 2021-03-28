@@ -57,4 +57,16 @@ public class OrderResource {
       .collect(Collectors.toList());
   }
 
+  @GET
+  @Path("")
+  @Produces(APPLICATION_JSON)
+  @PermitAll
+  public List<OrderDisplayDTO> getOrders() {
+    // FIXME only admin
+    return orderService.get()
+      .stream()
+      .map(o -> new OrderDisplayDTO().fromEntity(o))
+      .collect(Collectors.toList());
+  }
+
 }

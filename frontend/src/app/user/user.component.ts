@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Order, OrderService} from "../service/order.service";
+import {OrderService} from "../service/order.service";
 import {Observable} from "rxjs";
 import {toAddressString, toMoney} from "../util/utils"
+import {Order} from "../util/interfaces";
 
 @Component({
   selector: 'app-user',

@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProductService} from "../service/product.service";
 import {Observable} from "rxjs";
-import {CartService, Orderable} from "../service/cart.service";
+import {CartService} from "../service/cart.service";
+import {Product} from "../util/interfaces";
 
 @Component({
   selector: 'app-products',
@@ -11,7 +12,7 @@ import {CartService, Orderable} from "../service/cart.service";
 export class ProductsComponent implements OnInit {
 
   @Input()
-  products$!: Observable<any>;
+  products$!: Observable<Product[]>;
 
   constructor(private productService: ProductService,
               private cartService: CartService) {
@@ -20,7 +21,8 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public addToCart(product: Orderable): void {
+
+  public addToCart(product: Product): void {
     this.cartService.put(product.id, product.name, 1, product.price);
   }
 

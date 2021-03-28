@@ -111,7 +111,7 @@ public class OrderServiceBean implements OrderService {
   }
 
   @Override
-  public List<Order> getByUser() {
-    return null;
+  public List<Order> get() {
+    return orderRepo.getAll();
   }
 }

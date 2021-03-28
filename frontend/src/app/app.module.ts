@@ -18,7 +18,9 @@ import {ProductOverviewComponent} from './product-overview/product-overview.comp
 import {AccordionModule} from "ngx-bootstrap/accordion";
 import {UserComponent} from './user/user.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { AdminComponent } from './admin/admin.component';
+import {AdminComponent} from './admin/admin.component';
+import {TabsModule} from "ngx-bootstrap/tabs";
+import {ModalModule} from "ngx-bootstrap/modal";
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { AdminComponent } from './admin/admin.component';
     FormsModule,
     SweetAlert2Module.forRoot(),
     AccordionModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TabsModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     HttpClientModule,

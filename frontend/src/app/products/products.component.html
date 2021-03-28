@@ -4,12 +4,15 @@
          src="https://www.geiger-chemie.de/wp-content/uploads/2020/04/orionthemes-placeholder-image.png"
          alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title"><a [routerLink]="['/products', product.id]">{{product.name}}</a></h5>
+      <h5 class="card-title">
+        <a [routerLink]="['/products', product.id]">{{product.name}}</a>
+        <span *ngIf="product.deleted" class="badge badge-info badge-danger">DELETED</span>
+      </h5>
       <p class="card-text">{{product.description}}</p>
       <p>{{product.price.toLocaleString('de-CH', {style: 'currency', currency: 'CHF'})}}</p>
       <p>Stock: {{product.stock}}</p>
       <button (click)="addToCart(product)" class="btn btn-outline-primary"
-              [disabled]="product.stock <= 0">Add to cart
+              [disabled]="product.stock <= 0 && !product.deleted">Add to cart
       </button>
     </div>
   </div>

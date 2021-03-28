@@ -93,7 +93,7 @@ public class ProductResource {
     p.setDescription("This is a test description");
     p.setStock(23);
     p.setCategory(ProductCategory.DRINK);
-    p.setPrice(new Double(23.50));
+    p.setPrice(23.50);
     p.setName("Testproduct");
 
     productService.post(p);
@@ -125,11 +125,11 @@ public class ProductResource {
   @Path("")
   @Consumes(APPLICATION_JSON)
   @Produces(APPLICATION_JSON)
-  public Response post(
+  public ProductDTO post(
     @NotNull @Valid ProductCreationDTO productCreationDTO
   ) {
-    productService.post(productCreationDTO);
-    return Response.ok().build();
+    var saved = productService.post(productCreationDTO);
+    return new ProductDTO().fromEntity(saved);
   }
 
   @PUT
@@ -137,7 +137,7 @@ public class ProductResource {
   @Consumes(APPLICATION_JSON)
   @Produces(APPLICATION_JSON)
   public ProductDTO put(
-    @NotNull @Valid ProductDTO productDTO
+    @NotNull @Valid ProductCreationDTO productDTO
   ) {
     Product merged = productService.update(productDTO);
     return new ProductDTO().fromEntity(merged);
@@ -150,7 +150,6 @@ public class ProductResource {
   public Response delete(
     @PathParam("id") @NotNull @Valid String id
   ) {
-    // FIXME mark as deleted might be better option
     productService.delete(id);
     return Response.ok().build();
   }

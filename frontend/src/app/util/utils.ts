@@ -1,4 +1,4 @@
-import {Address} from "../service/order.service";
+import {Address} from "./interfaces";
 
 export function toMoney(amount: number): string {
   return amount.toLocaleString('de-CH', {style: 'currency', currency: 'CHF'})

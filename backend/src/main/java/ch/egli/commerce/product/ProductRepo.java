@@ -2,6 +2,7 @@ package ch.egli.commerce.product;
 
 import ch.egli.commerce.config.Database;
 import ch.egli.commerce.enumeration.ProductSortOptions;
+import ch.egli.commerce.exceptions.EntityNotFoundException;
 import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.persistence.QProduct;
 import java.util.List;
@@ -27,6 +28,8 @@ public class ProductRepo {
   public List<Product> getAll(ProductSortOptions options) {
     var query = database.queryFactory().from(QProduct.product);
 
+    query.where(QProduct.product.deleted.eq(false));
+
     switch (options) {
       case PRICE_ASC:
         query.orderBy(QProduct.product.price.asc());
@@ -48,6 +51,7 @@ public class ProductRepo {
   public List<Product> getNewest(int limit) {
     return (List<Product>) database.queryFactory().from(QProduct.product)
       .limit(limit)
+      .where(QProduct.product.deleted.eq(false))
       .orderBy(QProduct.product.creationDate.desc())
       .fetch();
   }
@@ -65,7 +69,8 @@ public class ProductRepo {
   }
 
   public Product find(String id) {
-    //FIXME error handling
-    return database.find(Product.class, id).orElse(null);
+    return database
+      .find(Product.class, id)
+      .orElseThrow(() -> new EntityNotFoundException("Product not found: " + id));
   }
 }

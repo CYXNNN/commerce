@@ -21,6 +21,9 @@ import lombok.Setter;
 @Table(name = "product")
 public class Product extends Persistence {
 
+  @Column(name = "deleted", nullable = false)
+  private boolean deleted;
+
   @NotNull
   @Column(nullable = false, name = "name")
   private String name;

@@ -4,7 +4,6 @@ import ch.egli.commerce.config.Database;
 import ch.egli.commerce.persistence.Order;
 import ch.egli.commerce.persistence.OrderItem;
 import ch.egli.commerce.persistence.QOrder;
-import ch.egli.commerce.persistence.QOrderItem;
 import ch.egli.commerce.persistence.User;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -27,8 +26,8 @@ public class OrderRepo {
     this.database = database;
   }
 
-  public List<OrderItem> getAll() {
-    return database.query().from(QOrderItem.orderItem).fetch();
+  public List<Order> getAll() {
+    return database.query().from(QOrder.order).fetch();
   }
 
   public void post(Order order) {

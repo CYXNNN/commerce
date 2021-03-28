@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 public class ProductCreationDTO {
 
+  private String id;
+
   @NotNull
   private String name;
 

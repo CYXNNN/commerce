@@ -1,1 +1,118 @@
-<p>admin works!</p>
+<h2>Admin Page</h2>
+<div>
+  <tabset>
+    <tab heading="Products">
+      <ng-container *ngIf="products$ | async">
+        <div class="create">
+          <button class="btn btn-outline-success" (click)="open(productModal)">+</button>
+        </div>
+        <table>
+          <thead>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th></th>
+          <th></th>
+          </thead>
+
+          <tr *ngFor="let product of products$ | async">
+            <td>{{product.name}}</td>
+            <td>{{toMoney(product.price)}}</td>
+            <td>{{product.stock}}</td>
+            <td>
+              <button type="button" class="btn btn-outline-success"
+                      (click)="editProduct(product, productModal)">
+                E
+              </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-danger"
+                      (click)="removeProduct(product.id)">
+                &times;
+              </button>
+            </td>
+          </tr>
+        </table>
+      </ng-container>
+    </tab>
+    <tab heading="Orders">
+      <ng-container *ngIf="orders$ | async">
+        <table>
+          <thead>
+          <th>Date</th>
+          <th>Billing Address</th>
+          <th>Shipping Address</th>
+          <th>Total</th>
+          <th></th>
+          <th></th>
+          </thead>
+
+          <tr *ngFor="let order of orders$ | async">
+            <td>{{order.creationDate | date:'dd.MM.yyyy HH:mm'}}</td>
+            <td>{{toAddressString(order.billingAddress)}}</td>
+            <td>{{toAddressString(order.senderAddress)}}</td>
+            <td>{{toMoney(order.orderTotal)}}</td>
+            <td>E</td>
+            <td>X</td>
+          </tr>
+        </table>
+      </ng-container>
+    </tab>
+    <tab heading="Users">
+      <div class="create">
+        <button class="btn btn-outline-success" (click)="newUser()">+</button>
+      </div>
+      Users
+    </tab>
+  </tabset>
+</div>
+
+
+<ng-template #productModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit product</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="productForm">
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="name">Name
+            <input class="form-control" id="name" formControlName="name" type="text"/>
+          </label>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="stock">Category
+            <select class="form-control" formControlName="category">
+              <option *ngFor="let category of categories"
+                      [ngValue]="category.value">{{category.label}}</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Description
+          <textarea class="form-control" id="description" formControlName="description"
+                    type="text"></textarea>
+        </label>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="price">Price
+            <input class="form-control" id="price" formControlName="price" type="number"/>
+          </label>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="stock">Stock
+            <input class="form-control" id="stock" formControlName="stock" type="number"/>
+          </label>
+
+        </div>
+      </div>
+
+    </form>
+    <button type="button" class="btn btn-outline-success" (click)="saveProduct()">Save</button>
+  </div>
+</ng-template>
