@@ -1,6 +1,7 @@
 package ch.egli.commerce.product;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA;
 import static javax.ws.rs.core.MediaType.WILDCARD;
 
 import ch.egli.commerce.enumeration.ProductCategory;
@@ -10,10 +11,11 @@ import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.persistence.User;
 import ch.egli.commerce.product.dto.ProductCreationDTO;
 import ch.egli.commerce.product.dto.ProductDTO;
-import ch.egli.commerce.user.UserServiceBean;
+import ch.egli.commerce.user.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -37,14 +39,14 @@ public class ProductResource {
 
   private ProductService productService;
 
-  private UserServiceBean userService;
+  private UserService userService;
 
   public ProductResource() {
     // nope
   }
 
   @Inject
-  ProductResource(ProductService productService, UserServiceBean userService) {
+  ProductResource(ProductService productService, UserService userService) {
     this.productService = productService;
     this.userService = userService;
   }
@@ -133,6 +135,7 @@ public class ProductResource {
   }
 
   @PUT
+  @RolesAllowed("ROLE_ADMIN")
   @Path("")
   @Consumes(APPLICATION_JSON)
   @Produces(APPLICATION_JSON)
@@ -144,6 +147,7 @@ public class ProductResource {
   }
 
   @DELETE
+  @RolesAllowed("ROLE_ADMIN")
   @Path("/{id}")
   @Consumes(APPLICATION_JSON)
   @Produces(WILDCARD)
@@ -151,6 +155,16 @@ public class ProductResource {
     @PathParam("id") @NotNull @Valid String id
   ) {
     productService.delete(id);
+    return Response.ok().build();
+  }
+
+  @POST
+  @Path("/image/{productId}")
+  @Consumes(MULTIPART_FORM_DATA)
+  public Response uploadImage(
+    @PathParam("productId") @NotNull @Valid String id
+  ) {
+
     return Response.ok().build();
   }
 

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-const AUTH_API = 'http://localhost:8080/commerce/auth/v1';
+const AUTH_API = 'http://localhost:8080/commerce/user/v1';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -19,7 +19,7 @@ export class AuthService {
   login(credentials): Observable<any> {
     return this.http.post(AUTH_API, {
       username: credentials.username,
-      password: credentials.password
+      hash: credentials.password
     }, httpOptions);
   }
 

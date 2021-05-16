@@ -6,22 +6,47 @@
         <accordion-panel
           [heading]="toMoney(order.orderTotal)">
 
-          <p>Shipment: {{order.shipment}}</p>
-          <p>Payment: {{order.payment}}</p>
 
-          <h5>Items:</h5>
-          <ul>
-            <li *ngFor="let item of order.items">
-              <span>{{item.quantity}}x </span>
-              <a [routerLink]="['/products', item.productId]">{{item.name}}</a>
-              <span> - {{toMoney(item.price)}}</span>
-            </li>
-          </ul>
-          <h5>Total: {{toMoney(order.orderTotal)}}</h5>
-          <h5>Billing Address:</h5>
-          {{toAddressString(order.billingAddress)}}
-          <h5>Shipping Address:</h5>
-          {{toAddressString(order.senderAddress)}}
+          <div class="row">
+            <div class="col-md-6">Shipment: {{order.shipment}}</div>
+            <div class="col-md-6">Payment: {{order.payment}}</div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Billing Address:</h5>
+              {{toAddressString(order.billingAddress)}}
+            </div>
+            <div class="col-md-6">
+
+              <h5>Shipping Address:</h5>
+              {{toAddressString(order.senderAddress)}}
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row col-md-12">
+            <h5>Items:</h5>
+          </div>
+          <div class="row col-md-12">
+            <br>
+            <ul>
+              <li *ngFor="let item of order.items">
+                <span>{{item.quantity}}x </span>
+                <a [routerLink]="['/products', item.productId]">{{item.name}}</a>
+                <span> - {{toMoney(item.price)}}</span>
+              </li>
+            </ul>
+          </div>
+
+          <hr>
+          <div class="row col-md-12">
+            <h5>Total: {{toMoney(order.orderTotal)}}</h5>
+          </div>
+
         </accordion-panel>
       </ng-container>
     </accordion>

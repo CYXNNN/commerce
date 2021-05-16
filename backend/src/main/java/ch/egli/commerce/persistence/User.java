@@ -39,6 +39,9 @@ public class User extends Persistence {
   @Column(name = "role", nullable = false)
   private UserRole role;
 
+  @Column(name = "auth_token")
+  private String authToken;
+
   @OneToOne(orphanRemoval = true, fetch = LAZY, cascade = ALL)
   @JoinColumn(name = "user_address")
   private Address address;

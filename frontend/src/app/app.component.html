@@ -13,14 +13,10 @@
           <a routerLink="/products" class="nav-link">Products</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/cart" class="nav-link">Cart</a></li>
-        <li class="nav-item">
-          <!-- FIXME if logged id -->
-          <a class="nav-link" *ngIf="!isLoggedIn" routerLink="user">User</a>
+          <a routerLink="/cart" class="nav-link">Cart</a>
         </li>
         <li class="nav-item">
-          <!-- FIXME if logged id and admin permission -->
-          <a class="nav-link" *ngIf="!isLoggedIn" routerLink="admin">Admin</a>
+          <a class="nav-link" *ngIf="isLoggedIn && showAdminBoard" routerLink="admin">Admin</a>
         </li>
       </ul>
 
@@ -35,10 +31,11 @@
 
       <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
         <li class="nav-item">
-          <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+
+          <a class="nav-link" routerLink="user">{{ username }}</a>
         </li>
         <li class="nav-item">
-          <a href class="nav-link" (click)="logout()">LogOut</a>
+          <a href class="nav-link" (click)="logout()">Logout</a>
         </li>
       </ul>
     </div>

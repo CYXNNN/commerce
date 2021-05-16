@@ -8,7 +8,7 @@ import {
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import Swal from "sweetalert2";
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {

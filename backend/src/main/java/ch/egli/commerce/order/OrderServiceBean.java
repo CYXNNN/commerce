@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 @RequestScoped
 @Transactional
@@ -42,6 +43,7 @@ public class OrderServiceBean implements OrderService {
   }
 
   @Override
+  @Transactional(TxType.REQUIRES_NEW)
   public void post(OrderCreationDTO dto) {
 
     Order order = new Order();
@@ -59,7 +61,6 @@ public class OrderServiceBean implements OrderService {
     // FIXME round price
     order.setOrderTotal(total);
 
-    // FIXME Address may be present, dont create new if so
     order.setBillingAddress(dto.getBillingAddress().toEntity());
     order.setSenderAddress(dto.getSenderAddress().toEntity());
 
@@ -84,6 +85,11 @@ public class OrderServiceBean implements OrderService {
     if (fetched == null) {
       LOG.log(Level.SEVERE, "Product with id: " + p.getId() + " is not present in the database");
       throw new EntityNotFoundException("You tried to order a product which is not present");
+    }
+
+    if (fetched.isDeleted()) {
+      throw new EntityNotFoundException(
+        "Product \"" + fetched.getName() + "\" is not present anymore.");
     }
 
     if (p.getQuantity() < 1) {

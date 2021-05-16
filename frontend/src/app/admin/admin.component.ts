@@ -115,4 +115,15 @@ export class AdminComponent implements OnInit {
     this.products$ = this.productService.getProducts('CREATION_DATE_DESC');
   }
 
+  upload(event: any, id: string): void {
+    if (event && event[0]) {
+
+      const file = event[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      this.productService.upload(formData, id).subscribe();
+    }
+  }
+
 }

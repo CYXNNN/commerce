@@ -28,6 +28,8 @@ public class ProductDTO extends AbstractDTO {
   @NotNull
   private ProductCategory category;
 
+  private byte[] picture;
+
   private boolean deleted;
 
   public ProductDTO fromEntity(@Valid Product entity) {
@@ -38,17 +40,8 @@ public class ProductDTO extends AbstractDTO {
     this.stock = entity.getStock();
     this.category = entity.getCategory();
     this.deleted = entity.isDeleted();
+    this.picture = entity.getPicture();
 
     return this;
-  }
-
-  public Product toEntity(Product target) {
-    target.setName(name);
-    target.setDescription(description);
-    target.setPrice(price);
-    target.setStock(stock);
-    target.setCategory(category);
-
-    return target;
   }
 }

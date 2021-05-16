@@ -21,7 +21,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AdminComponent} from './admin/admin.component';
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {ModalModule} from "ngx-bootstrap/modal";
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -55,6 +56,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
+      multi: true
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true
     }],
   bootstrap: [AppComponent]

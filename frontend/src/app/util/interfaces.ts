@@ -69,6 +69,13 @@ export interface Product extends Persistence {
   stock: number,
   category: ProductCategory,
   deleted: boolean,
+  picture: any,
+}
+
+export interface Token {
+  authId: string, //username
+  authToken: string, //token id
+  authPermission: string, // role
 }
 
 export type SortOption = 'NONE' |

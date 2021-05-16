@@ -19,9 +19,7 @@ export class OrderService {
   }
 
   get(userId: string): Observable<Order[]> {
-    // FIXME remove user id
-    userId = '4028b881785bcc1e01785bcc54210000';
-    return this.http.get<Order[]>(BASE_URL + '/' + userId);
+    return this.http.get<Order[]>(BASE_URL + '/single');
   }
 
   post(order: OrderCreation): Observable<any> {

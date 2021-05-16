@@ -28,6 +28,20 @@ public class UserRepo {
       .fetchFirst();
   }
 
+  public User findByUsernameAndPassword(String username, String hash) {
+    return database.queryFactory().selectFrom(QUser.user)
+      .where(QUser.user.username.eq(username))
+      .where(QUser.user.passwordHash.eq(hash))
+      .fetchFirst();
+  }
+
+  public User findByUsernameAndAuthToken(String username, String token) {
+    return database.queryFactory().selectFrom(QUser.user)
+      .where(QUser.user.username.eq(username))
+      .where(QUser.user.authToken.eq(token))
+      .fetchFirst();
+  }
+
   public User findById(String id) {
     return database.queryFactory().selectFrom(QUser.user)
       .where(QUser.user.id.eq(id))
@@ -48,6 +62,10 @@ public class UserRepo {
 
   public void post(User user) {
     database.persist(user);
+  }
+
+  public User put(User user) {
+    return database.merge(user);
   }
 
 }

@@ -5,19 +5,23 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import ch.egli.commerce.order.dto.OrderCreationDTO;
 import ch.egli.commerce.order.dto.OrderDisplayDTO;
+import ch.egli.commerce.security.Principal;
+import ch.egli.commerce.user.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 @RequestScoped
@@ -27,13 +31,16 @@ public class OrderResource {
 
   private OrderService orderService;
 
+  private UserService userService;
+
   public OrderResource() {
     // nope
   }
 
   @Inject
-  OrderResource(OrderService orderService) {
+  OrderResource(OrderService orderService, UserService userService) {
     this.orderService = orderService;
+    this.userService = userService;
   }
 
   @POST
@@ -46,12 +53,15 @@ public class OrderResource {
   }
 
   @GET
-  @Path("/{userId}")
+  @Path("/single")
   @Produces(APPLICATION_JSON)
   @PermitAll
-  public List<OrderDisplayDTO> getOrdersOfUser(@PathParam("userId") @NotNull @Valid String userId) {
+  public List<OrderDisplayDTO> getOrdersOfUser(
+    @Context HttpServletRequest request) {
+
+    var user = Principal.getInstance().caller(request.getHeader("auth-id"));
     // FIXME use principal for id and/or AuthorizerCheck
-    return orderService.getByUser(userId)
+    return orderService.getByUser(user.getId())
       .stream()
       .map(o -> new OrderDisplayDTO().fromEntity(o))
       .collect(Collectors.toList());
@@ -60,9 +70,9 @@ public class OrderResource {
   @GET
   @Path("")
   @Produces(APPLICATION_JSON)
-  @PermitAll
+  @RolesAllowed("ROLE_ADMIN")
   public List<OrderDisplayDTO> getOrders() {
-    // FIXME only admin
+    // TODO implement pagination for future releases
     return orderService.get()
       .stream()
       .map(o -> new OrderDisplayDTO().fromEntity(o))
