@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {Product, SortOption} from "../util/interfaces";
 
-const BASE_URL = 'http://127.0.0.1:8080/commerce/product/v1'
+const BASE_URL = 'http://cyxn.fans:8080/commerce/product/v1'
 
 
 @Injectable({

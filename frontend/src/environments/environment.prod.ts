@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8080/commerce/'
+  apiUrl: 'http://cyxn.fans:8080/commerce/'
 };
