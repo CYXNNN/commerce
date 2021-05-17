@@ -16,6 +16,8 @@ public interface UserService {
 
   Token auth(@NotNull @Valid LoginDTO loginDto);
 
+  void removeToken(String username);
+
   boolean isAuthorized(String authId, String authToken, Set<String> rolesAllowed);
 
   void post(User user);

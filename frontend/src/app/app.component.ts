@@ -49,7 +49,7 @@ export class AppComponent {
   }
 
   logout(): void {
-    // TODO destroy token serverside
+    this.authService.logout();
     this.tokenStorageService.signOut();
     this.setLoginData();
     this.router.navigate(['home'])

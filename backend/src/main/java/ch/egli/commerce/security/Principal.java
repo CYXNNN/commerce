@@ -25,6 +25,10 @@ public final class Principal {
     users.put(authToken, user.getUsername());
   }
 
+  public void remove(String authToken) {
+    users.remove(authToken);
+  }
+
   public String caller(String authToken) {
     return users.get(authToken);
   }

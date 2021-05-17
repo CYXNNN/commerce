@@ -89,6 +89,13 @@ public class UserServiceBean implements UserService {
 
     user.setAddress(addressDto.toEntity(address));
     userRepo.put(user);
+  }
 
+  @Override
+  public void removeToken(String username) {
+    var user = userRepo.findByUsername(username);
+    user.setAuthToken(null);
+
+    userRepo.put(user);
   }
 }

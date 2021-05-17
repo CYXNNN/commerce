@@ -44,12 +44,19 @@ public class UserResource {
   }
 
 
-  @POST
+  @GET
   @Path("/logout")
   @Consumes(APPLICATION_JSON)
   @Produces(APPLICATION_JSON)
-  public Response logout() {
-    // TODO
+  public Response logout(@Context HttpServletRequest request) {
+    var token = request.getHeader("auth-token");
+    var username = Principal.getInstance().caller(token);
+
+    if (username != null) {
+      Principal.getInstance().remove(token);
+      userService.removeToken(username);
+    }
+
     return Response.ok().build();
   }
 
