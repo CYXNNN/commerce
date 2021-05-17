@@ -5,14 +5,10 @@ import static javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM;
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA;
 import static javax.ws.rs.core.MediaType.WILDCARD;
 
-import ch.egli.commerce.enumeration.ProductCategory;
 import ch.egli.commerce.enumeration.ProductSortOptions;
-import ch.egli.commerce.enumeration.UserRole;
 import ch.egli.commerce.persistence.Product;
-import ch.egli.commerce.persistence.User;
 import ch.egli.commerce.product.dto.ProductCreationDTO;
 import ch.egli.commerce.product.dto.ProductDTO;
-import ch.egli.commerce.user.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.security.PermitAll;
@@ -41,16 +37,14 @@ public class ProductResource {
 
   private ProductService productService;
 
-  private UserService userService;
 
   public ProductResource() {
     // nope
   }
 
   @Inject
-  ProductResource(ProductService productService, UserService userService) {
+  ProductResource(ProductService productService) {
     this.productService = productService;
-    this.userService = userService;
   }
 
   @GET
@@ -86,44 +80,6 @@ public class ProductResource {
   ) {
     return new ProductDTO().fromEntity(productService.find(id));
   }
-
-  @GET
-  @Path("/sample-data")
-  @Produces(APPLICATION_JSON)
-  public Response sampleData(
-  ) {
-
-    ProductCreationDTO p = new ProductCreationDTO();
-    p.setDescription("This is a test description");
-    p.setStock(23);
-    p.setCategory(ProductCategory.DRINK);
-    p.setPrice(23.50);
-    p.setName("Testproduct");
-
-    productService.post(p);
-
-    return Response.ok().build();
-  }
-
-  @GET
-  @Path("/sample-user")
-  @Produces(APPLICATION_JSON)
-  public Response sampleUser(
-  ) {
-
-    User user = new User();
-
-    user.setUsername("admin");
-    user.setAddress(null);
-    user.setEmail("hello@cyxn.fans");
-    user.setPasswordHash("dfsdfsdfsdf");
-    user.setRole(UserRole.ROLE_ADMIN);
-
-    userService.post(user);
-
-    return Response.ok().build();
-  }
-
 
   @POST
   @Path("")

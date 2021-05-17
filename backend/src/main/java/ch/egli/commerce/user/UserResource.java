@@ -4,6 +4,8 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import ch.egli.commerce.address.dto.AddressCreationDTO;
 import ch.egli.commerce.address.dto.AddressDTO;
+import ch.egli.commerce.enumeration.UserRole;
+import ch.egli.commerce.persistence.User;
 import ch.egli.commerce.security.Principal;
 import ch.egli.commerce.security.Token;
 import ch.egli.commerce.user.dto.LoginDTO;
@@ -43,6 +45,24 @@ public class UserResource {
     this.userService = userService;
   }
 
+  @GET
+  @Path("/sample-user")
+  @Produces(APPLICATION_JSON)
+  public Response sampleUser(
+  ) {
+
+    User user = new User();
+
+    user.setUsername("admin");
+    user.setAddress(null);
+    user.setEmail("hello@cyxn.fans");
+    user.setPasswordHash("password");
+    user.setRole(UserRole.ROLE_ADMIN);
+
+    userService.post(user);
+
+    return Response.ok().build();
+  }
 
   @GET
   @Path("/logout")
