@@ -1,13 +1,6 @@
-import {Observable, of} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Injectable} from "@angular/core";
-
-
-export interface Orderable {
-  id: string,
-  name: string,
-  amount: number,
-  price: number,
-}
+import {Orderable} from "../util/interfaces";
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +9,7 @@ export class CartService {
 
   // acting as store so the cart is basically in a global state.
   items: Orderable[] = [];
+  items$ = new BehaviorSubject<Orderable[]>([]);
 
   public find(id: string): Orderable {
     return this.items.find(i => i.id === id);
@@ -34,19 +28,23 @@ export class CartService {
 
     // add item to store
     this.items.push(item);
+    this.items$.next(this.items);
   }
 
-  public remove(id: string): Observable<Orderable[]> {
+  public remove(id: string): void {
     this.items = this.items.filter(obj => obj.id !== id);
-    return this.observable();
+    this.items$.next(this.items);
   }
 
   public reset(): void {
     this.items = [];
+    this.items$.next(this.items);
   }
 
   public observable(): Observable<Orderable[]> {
-    return of(this.items);
+    debugger;
+    this.items$.next(this.items);
+    return this.items$;
   }
 
   public get(): Orderable[] {

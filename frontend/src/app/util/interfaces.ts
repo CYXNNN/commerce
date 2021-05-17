@@ -74,6 +74,13 @@ export interface Product extends Persistence {
   fileType: string,
 }
 
+export interface Orderable {
+  id: string,
+  name: string,
+  amount: number,
+  price: number,
+}
+
 export interface Token {
   authId: string, //username
   authToken: string, //token id

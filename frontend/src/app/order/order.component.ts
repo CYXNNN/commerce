@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../service/order.service";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CartService, Orderable} from "../service/cart.service";
+import {CartService} from "../service/cart.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Address, OrderCreation} from "../util/interfaces";
+import {Address, Orderable, OrderCreation} from "../util/interfaces";
 import Swal from "sweetalert2";
 import {UserService} from "../service/user.service";
 import {Observable} from "rxjs";
+import {toMoney} from "../util/utils"
 
 @Component({
   selector: 'app-order',
@@ -19,6 +20,8 @@ export class OrderComponent implements OnInit {
   products: Orderable[];
   order: OrderCreation;
   form: FormGroup;
+  orderTotal: number = 0;
+  toMoney = toMoney;
 
   constructor(private route: ActivatedRoute,
               private cartService: CartService,
@@ -67,6 +70,10 @@ export class OrderComponent implements OnInit {
       this.form.patchValue(billing);
     })
     this.products = this.cartService.get();
+
+    this.products.forEach(item => {
+      this.orderTotal += item.amount * item.price;
+    });
 
 
     this.initProducts(this.products);

@@ -1,12 +1,9 @@
-<h2>Cart</h2>
-<div *ngIf="(items$ | async).length > 0; else nope">
-  <div *ngFor="let item of (items$ | async)">
-    <a [routerLink]="['/products', item.id]">{{item.name}}</a> - {{item.amount}}
-    <button (click)="remove(item.id)" class="btn btn-sm btn-outline-danger">X</button>
-  </div>
-  <p>Total: 15 CHF</p>
-  <button (click)="checkout()" class="btn btn-outline-success">Checkout</button>
+<h2>Cart&nbsp;<span class="badge badge-success">{{itemCount}}</span></h2>
+<div *ngFor="let item of (items$ | async)">
+  <a [routerLink]="['/products', item.id]">{{item.name}}</a> - {{item.amount}}
+  <button (click)="remove(item.id)" class="btn btn-sm btn-outline-danger">X</button>
 </div>
-
-<ng-template #nope><span><i>No items in cart.</i></span></ng-template>
+<p>Total: {{toMoney(orderTotal)}}</p>
+<button (click)="checkout()" [disabled]="itemCount < 1" class="btn btn-outline-success">Checkout
+</button>
 
