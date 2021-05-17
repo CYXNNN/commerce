@@ -7,7 +7,7 @@ import java.util.Map;
 public final class Principal {
 
   private static Principal INSTANCE;
-  private Map<String, User> users = new HashMap<>();
+  private Map<String, String> users = new HashMap<>();
 
   private Principal() {
   }
@@ -21,11 +21,11 @@ public final class Principal {
     return INSTANCE;
   }
 
-  public void put(User user) {
-    users.put(user.getUsername(), user);
+  public void put(String authToken, User user) {
+    users.put(authToken, user.getUsername());
   }
 
-  public User caller(String username) {
-    return users.get(username);
+  public String caller(String authToken) {
+    return users.get(authToken);
   }
 }

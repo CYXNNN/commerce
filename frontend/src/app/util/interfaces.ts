@@ -69,7 +69,9 @@ export interface Product extends Persistence {
   stock: number,
   category: ProductCategory,
   deleted: boolean,
-  picture: any,
+  picture: Blob,
+  fileName: string,
+  fileType: string,
 }
 
 export interface Token {

@@ -4,6 +4,7 @@ import ch.egli.commerce.exceptions.EntityNotFoundException;
 import ch.egli.commerce.exceptions.IllegalQuantityException;
 import ch.egli.commerce.exceptions.ProductOutOfStockException;
 import ch.egli.commerce.order.dto.OrderCreationDTO;
+import ch.egli.commerce.persistence.Address;
 import ch.egli.commerce.persistence.Order;
 import ch.egli.commerce.persistence.OrderItem;
 import ch.egli.commerce.persistence.Product;
@@ -44,7 +45,7 @@ public class OrderServiceBean implements OrderService {
 
   @Override
   @Transactional(TxType.REQUIRES_NEW)
-  public void post(OrderCreationDTO dto) {
+  public void post(OrderCreationDTO dto, String username) {
 
     Order order = new Order();
 
@@ -58,14 +59,12 @@ public class OrderServiceBean implements OrderService {
       .map(OrderItem::totalItemPrice)
       .reduce((double) 0, Double::sum);
 
-    // FIXME round price
     order.setOrderTotal(total);
 
-    order.setBillingAddress(dto.getBillingAddress().toEntity());
-    order.setSenderAddress(dto.getSenderAddress().toEntity());
+    order.setBillingAddress(dto.getBillingAddress().toEntity(new Address()));
+    order.setSenderAddress(dto.getSenderAddress().toEntity(new Address()));
 
-    // FIXME use principal when login is implemented
-    order.setUser(userRepo.findByUsername("admin"));
+    order.setUser(userRepo.findByUsername(username));
 
     orderRepo.post(order);
   }
@@ -119,8 +118,8 @@ public class OrderServiceBean implements OrderService {
   }
 
   @Override
-  public List<Order> getByUser(String userId) {
-    var user = userRepo.findById(userId);
+  public List<Order> getByUser(String username) {
+    var user = userRepo.findByUsername(username);
     return orderRepo.findByUser(user);
   }
 

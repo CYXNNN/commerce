@@ -47,4 +47,8 @@ export class ProductService {
   upload(file: FormData, id: string): Observable<any> {
     return this.http.post(BASE_URL + '/image/' + id, file);
   }
+
+  getImage(id: string): Observable<any> {
+    return this.http.get(BASE_URL + '/image/' + id, {responseType: 'blob'});
+  }
 }

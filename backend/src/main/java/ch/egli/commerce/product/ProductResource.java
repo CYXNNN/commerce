@@ -1,6 +1,7 @@
 package ch.egli.commerce.product;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM;
 import static javax.ws.rs.core.MediaType.MULTIPART_FORM_DATA;
 import static javax.ws.rs.core.MediaType.WILDCARD;
 
@@ -31,6 +32,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 @RequestScoped
 @Transactional
@@ -159,13 +161,28 @@ public class ProductResource {
   }
 
   @POST
+  @RolesAllowed("ROLE_ADMIN")
   @Path("/image/{productId}")
   @Consumes(MULTIPART_FORM_DATA)
   public Response uploadImage(
-    @PathParam("productId") @NotNull @Valid String id
+    @PathParam("productId") @NotNull @Valid String id,
+    MultipartFormDataInput input
   ) {
 
+    productService.uploadImage(id, input);
+
     return Response.ok().build();
+  }
+
+  @GET
+  @Consumes(APPLICATION_JSON)
+  @Produces(APPLICATION_OCTET_STREAM)
+  @Path("/image/{productId}")
+  public Response getFile(@PathParam("productId") @NotNull @Valid String id) {
+    Product product = productService.find(id);
+    return Response.ok(product.getPicture(), APPLICATION_OCTET_STREAM)
+      .header("Content-Disposition", "attachment; filename=\"" + product.getFileName() + "\"")
+      .build();
   }
 
 }

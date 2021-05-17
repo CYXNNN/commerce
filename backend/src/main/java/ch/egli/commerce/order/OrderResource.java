@@ -47,8 +47,10 @@ public class OrderResource {
   @Path("")
   @Produces(APPLICATION_JSON)
   @PermitAll
-  public Response post(@NotNull @Valid OrderCreationDTO orderCreationDTO) {
-    this.orderService.post(orderCreationDTO);
+  public Response post(@NotNull @Valid OrderCreationDTO orderCreationDTO,
+    @Context HttpServletRequest request) {
+    var username = Principal.getInstance().caller(request.getHeader("auth-token"));
+    this.orderService.post(orderCreationDTO, username);
     return Response.ok().build();
   }
 
@@ -59,9 +61,8 @@ public class OrderResource {
   public List<OrderDisplayDTO> getOrdersOfUser(
     @Context HttpServletRequest request) {
 
-    var user = Principal.getInstance().caller(request.getHeader("auth-id"));
-    // FIXME use principal for id and/or AuthorizerCheck
-    return orderService.getByUser(user.getId())
+    var username = Principal.getInstance().caller(request.getHeader("auth-token"));
+    return orderService.getByUser(username)
       .stream()
       .map(o -> new OrderDisplayDTO().fromEntity(o))
       .collect(Collectors.toList());

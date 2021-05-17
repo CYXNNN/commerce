@@ -30,6 +30,10 @@ public class ProductDTO extends AbstractDTO {
 
   private byte[] picture;
 
+  private String fileType;
+
+  private String fileName;
+
   private boolean deleted;
 
   public ProductDTO fromEntity(@Valid Product entity) {
@@ -41,6 +45,8 @@ public class ProductDTO extends AbstractDTO {
     this.category = entity.getCategory();
     this.deleted = entity.isDeleted();
     this.picture = entity.getPicture();
+    this.fileName = entity.getFileName();
+    this.fileType = entity.getFileType();
 
     return this;
   }

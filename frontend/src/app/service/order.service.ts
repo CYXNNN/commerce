@@ -18,7 +18,7 @@ export class OrderService {
     return this.http.get<Order[]>(BASE_URL);
   }
 
-  get(userId: string): Observable<Order[]> {
+  get(): Observable<Order[]> {
     return this.http.get<Order[]>(BASE_URL + '/single');
   }
 

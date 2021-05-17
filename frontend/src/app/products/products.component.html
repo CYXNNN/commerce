@@ -1,7 +1,8 @@
 <div class="card-wrapper">
   <div class="card" *ngFor="let product of products$ | async">
     <img class="card-img-top"
-         src="https://www.geiger-chemie.de/wp-content/uploads/2020/04/orionthemes-placeholder-image.png"
+         [src]="renderImage(product)"
+         height="200"
          alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">

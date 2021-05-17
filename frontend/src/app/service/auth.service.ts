@@ -24,10 +24,14 @@ export class AuthService {
   }
 
   register(user): Observable<any> {
-    return this.http.post(AUTH_API + '/signup', {
+    return this.http.post(AUTH_API + '/register', {
       username: user.username,
       email: user.email,
-      password: user.password
+      hash: user.password
     }, httpOptions);
+  }
+
+  tokenvalidity(authToken: string, authId: string): Observable<boolean> {
+    return this.http.get<boolean>(AUTH_API + '/tokenvalidity/' + authToken + '/' + authId);
   }
 }

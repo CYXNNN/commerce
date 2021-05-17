@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface OrderService {
 
-  void post(OrderCreationDTO dto);
+  void post(OrderCreationDTO dto, String principal);
 
-  List<Order> getByUser(String userId);
+  List<Order> getByUser(String username);
 
   List<Order> get();
 

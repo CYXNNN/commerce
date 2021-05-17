@@ -4,6 +4,7 @@ import ch.egli.commerce.enumeration.ProductSortOptions;
 import ch.egli.commerce.persistence.Product;
 import ch.egli.commerce.product.dto.ProductCreationDTO;
 import java.util.Collection;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 public interface ProductService {
 
@@ -18,4 +19,6 @@ public interface ProductService {
   Product post(ProductCreationDTO productCreationDTO);
 
   void delete(String id);
+
+  void uploadImage(String productId, MultipartFormDataInput input);
 }

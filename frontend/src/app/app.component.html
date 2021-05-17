@@ -22,10 +22,10 @@
 
       <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
         <li class="nav-item">
-          <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+          <a class="nav-link" routerLink="register">Sign Up</a>
         </li>
         <li class="nav-item">
-          <a href="/login" class="nav-link" routerLink="login">Login</a>
+          <a class="nav-link" (click)="open(loginModal)">Login</a>
         </li>
       </ul>
 
@@ -35,7 +35,7 @@
           <a class="nav-link" routerLink="user">{{ username }}</a>
         </li>
         <li class="nav-item">
-          <a href class="nav-link" (click)="logout()">Logout</a>
+          <a class="nav-link" (click)="logout()">Logout</a>
         </li>
       </ul>
     </div>
@@ -48,3 +48,33 @@
 
   </div>
 </div>
+<ng-template #loginModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Login</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="username">Username
+            <input class="form-control" id="username" autocomplete="username"
+                   formControlName="username" type="text"/>
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="password">Password
+            <input class="form-control" autocomplete="current-password" id="password"
+                   formControlName="password"
+                   type="password"/>
+          </label>
+        </div>
+      </div>
+      <button type="button" class="btn btn-outline-success" (click)="submit()">Login</button>
+    </form>
+  </div>
+</ng-template>

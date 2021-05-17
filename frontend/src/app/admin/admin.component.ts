@@ -32,6 +32,7 @@ export class AdminComponent implements OnInit {
   faPlus = faPlus;
   modalRef: BsModalRef;
   productForm: FormGroup;
+  productId: string = '';
 
   constructor(private productService: ProductService,
               private orderService: OrderService,
@@ -44,6 +45,7 @@ export class AdminComponent implements OnInit {
     this.orders$ = this.orderService.getOrders();
 
     this.modalService.onHidden.subscribe((reason: string | any) => {
+      this.productId = '';
       this.productForm.reset();
     })
 
@@ -63,7 +65,6 @@ export class AdminComponent implements OnInit {
       stock: [undefined,
         [Validators.required,
           Validators.min(0)]],
-      // FIXME hardcoded
       category: [undefined, Validators.required]
     })
   }
@@ -95,6 +96,7 @@ export class AdminComponent implements OnInit {
   }
 
   editProduct(product: Product, template: TemplateRef<any>): void {
+    this.productId = product.id;
     this.productForm.patchValue(product);
     this.open(template)
   }
@@ -115,14 +117,14 @@ export class AdminComponent implements OnInit {
     this.products$ = this.productService.getProducts('CREATION_DATE_DESC');
   }
 
-  upload(event: any, id: string): void {
+  upload(event: any): void {
     if (event && event[0]) {
 
       const file = event[0];
       const formData = new FormData();
       formData.append("file", file);
 
-      this.productService.upload(formData, id).subscribe();
+      this.productService.upload(formData, this.productId).subscribe();
     }
   }
 

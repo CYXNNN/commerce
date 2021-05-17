@@ -12,15 +12,15 @@ export class ProductOverviewComponent implements OnInit {
 
   products$ = new Observable<any>();
   options = [{
-    label: 'Keine Sortierung', value: 'NONE'
+    label: 'Unsorted', value: 'NONE'
   }, {
-    label: 'Teuerste zuerst', value: 'PRICE_DESC'
+    label: 'Expensive -> cheap', value: 'PRICE_DESC'
   }, {
-    label: 'Billigste zuerst', value: 'PRICE_ASC'
+    label: 'Cheap -> expensive', value: 'PRICE_ASC'
   }, {
-    label: 'Neueste zuerst', value: 'CREATION_DATE_DESC'
+    label: 'Newest', value: 'CREATION_DATE_DESC'
   }, {
-    label: 'Älteste zuerst', value: 'CREATION_DATE_ASC'
+    label: 'Oldest', value: 'CREATION_DATE_ASC'
   }];
 
   selected: SortOption = 'NONE';

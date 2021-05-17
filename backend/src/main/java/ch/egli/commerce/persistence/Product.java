@@ -53,4 +53,10 @@ public class Product extends Persistence {
   @Basic(fetch = FetchType.LAZY)
   @Column(name = "picture")
   private byte[] picture;
+
+  @Column(name = "file_type")
+  private String fileType;
+
+  @Column(name = "file_name")
+  private String fileName;
 }

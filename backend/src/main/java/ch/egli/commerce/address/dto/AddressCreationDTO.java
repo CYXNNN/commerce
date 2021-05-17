@@ -1,6 +1,5 @@
 package ch.egli.commerce.address.dto;
 
-import ch.egli.commerce.dto.AbstractDTO;
 import ch.egli.commerce.persistence.Address;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressDTO extends AbstractDTO {
+public class AddressCreationDTO {
 
   @NotNull
   private String name = "";
@@ -41,19 +40,6 @@ public class AddressDTO extends AbstractDTO {
     ad.setCity(this.getCity());
 
     return ad;
-  }
-
-  public AddressDTO fromEntity(Address entity) {
-    super.fromEntity(entity);
-
-    this.setCity(entity.getCity());
-    this.setName(entity.getName());
-    this.setNumber(entity.getNumber());
-    this.setPrename(entity.getPrename());
-    this.setStreet(entity.getStreet());
-    this.setZip(entity.getZip());
-
-    return this;
   }
 
 }
