@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {CartService} from "./cart.service";
 import {Address} from "../util/interfaces";
 
-const BASE_URL = 'http://cyxn.fans:8080/commerce/user/v1'
+const BASE_URL = 'http://127.0.0.1:8080/commerce/user/v1'
 
 @Injectable({
   providedIn: 'root',
